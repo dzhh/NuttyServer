@@ -1,4 +1,4 @@
-package com.fly.netty.server;
+package com.fly.netty.server.handler;
 
 import com.fly.netty.common.MessageType;
 import com.fly.netty.struct.Header;
@@ -7,7 +7,11 @@ import com.fly.netty.struct.NettyMessage;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
-
+/**
+ * 
+ * @author fly
+ *
+ */
 public class HeartBeatRespHandler extends ChannelHandlerAdapter {
 	
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {

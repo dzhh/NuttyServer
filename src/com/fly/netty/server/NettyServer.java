@@ -24,7 +24,7 @@ public class NettyServer {
 	public static void main(String[] args) throws Exception {
     	new NettyServer().bind();
     	while (true){
-            SocketChannel channel = (SocketChannel)NettyChannelMap.get("001");
+            SocketChannel channel = (SocketChannel)NettyChannelMap.getSocketChannel("001");
             if(channel != null){
                 AskMsg askMsg=new AskMsg();
                 channel.writeAndFlush(askMsg);

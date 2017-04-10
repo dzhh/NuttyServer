@@ -2,9 +2,9 @@ package com.fly.netty.server.channel;
 
 import com.fly.netty.codec.NettyMessageDecoder;
 import com.fly.netty.codec.NettyMessageEncoder;
-import com.fly.netty.server.HeartBeatRespHandler;
-import com.fly.netty.server.LoginAuthRespHandler;
-import com.fly.netty.server.NettyServerHandler;
+import com.fly.netty.server.handler.HeartBeatRespHandler;
+import com.fly.netty.server.handler.LoginAuthRespHandler;
+import com.fly.netty.server.handler.NettyServerHandler;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;

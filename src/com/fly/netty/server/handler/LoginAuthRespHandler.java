@@ -1,4 +1,4 @@
-package com.fly.netty.server;
+package com.fly.netty.server.handler;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
