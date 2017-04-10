@@ -19,8 +19,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.fly.netty.codec.NettyMessageDecoder;
-import com.fly.netty.codec.NettyMessageEncoder;
 import com.fly.netty.common.AskMsg;
 import com.fly.netty.common.AskParams;
 import com.fly.netty.common.Constants;
@@ -95,43 +93,6 @@ public class NettyClient {
             System.out.println("connect server  成功---------");
         }
 	        
-	        
-//		    bootstrap.group(group).channel(NioSocketChannel.class)
-//			    .option(ChannelOption.TCP_NODELAY, true)
-//			    .handler(new ChannelInitializer<SocketChannel>() {
-//				@Override
-//				public void initChannel(SocketChannel ch)
-//					throws Exception {
-//				    ch.pipeline().addLast(new NettyMessageDecoder(1024 * 1024, 4, 4));
-//				    ch.pipeline().addLast("MessageEncoder", new NettyMessageEncoder());
-//				    ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(50));
-//				    ch.pipeline().addLast("LoginAuthHandler", new LoginAuthReqHandler());
-//				    ch.pipeline().addLast("HeartBeatHandler", new HeartBeatReqHandler());
-//				}
-//			    });
-		    // 发起异步连接操作
-//		    ChannelFuture future = b.connect(new InetSocketAddress(host, port),
-//			    new InetSocketAddress(NettyConstant.LOCALIP,
-//				    NettyConstant.LOCAL_PORT)).sync();
-//		    future.channel().closeFuture().sync();
-//		} finally {
-//		    // 所有资源释放完成之后，清空资源，再次发起重连操作
-//		    executor.execute(new Runnable() {
-//				@Override
-//				public void run() {
-//				    try {
-//					TimeUnit.SECONDS.sleep(1);
-//					try {
-//					    connect(NettyConstant.PORT, NettyConstant.REMOTEIP);// 发起重连操作
-//					} catch (Exception e) {
-//					    e.printStackTrace();
-//					}
-//				    } catch (InterruptedException e) {
-//					e.printStackTrace();
-//				    }
-//				}
-//		    });
-//		}
     }
 
     /**
