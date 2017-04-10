@@ -30,7 +30,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
             }
         }
     }
-    @Override
+//    @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, BaseMsg baseMsg) throws Exception {
         MsgType msgType=baseMsg.getType();
         switch (msgType){
@@ -59,4 +59,34 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
         }
         ReferenceCountUtil.release(msgType);
     }
+	@Override
+	protected void channelRead0(ChannelHandlerContext channelHandlerContext, BaseMsg baseMsg) throws Exception {
+		// TODO Auto-generated method stub
+		MsgType msgType = baseMsg.getType();
+        switch (msgType){
+            case LOGIN:{
+                //向服务器发起登录
+                LoginMsg loginMsg=new LoginMsg();
+                loginMsg.setPassword("yao");
+                loginMsg.setUserName("robin");
+                channelHandlerContext.writeAndFlush(loginMsg);
+            }break;
+            case PING:{
+                System.out.println("receive ping from server----------");
+            }break;
+            case ASK:{
+                ReplyClientBody replyClientBody=new ReplyClientBody("client info **** !!!");
+                ReplyMsg replyMsg=new ReplyMsg();
+                replyMsg.setBody(replyClientBody);
+                channelHandlerContext.writeAndFlush(replyMsg);
+            }break;
+            case REPLY:{
+                ReplyMsg replyMsg=(ReplyMsg)baseMsg;
+                ReplyServerBody replyServerBody=(ReplyServerBody)replyMsg.getBody();
+                System.out.println("receive client msg: "+replyServerBody.getServerInfo());
+            }
+            default:break;
+        }
+        ReferenceCountUtil.release(msgType);
+	}
 }

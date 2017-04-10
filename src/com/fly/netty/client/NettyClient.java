@@ -30,24 +30,41 @@ import com.fly.netty.common.NettyConstant;
 
 public class NettyClient {
 	
-	public static void main(String[]args) throws Exception {
+	public static void main(String[]args) {
     	Constants.setClientId("001");
 //      NettyClientBootstrap bootstrap=new NettyClientBootstrap(9999,"localhost");
 	  	NettyClient nettyClient = new NettyClient();
-	  	nettyClient.connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+	  	nettyClient.connectServer(nettyClient);
+	  	while (true){
+	  		try {
+				TimeUnit.SECONDS.sleep(3);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	  		System.out.println("nettyClient.socketChannel.isActive() = " + nettyClient.socketChannel.isActive());
+	  		if(nettyClient.socketChannel.isActive()) {
+	  			AskMsg askMsg = new AskMsg();
+		  		AskParams askParams=new AskParams();
+		  		askParams.setAuth("authToken");
+		  		askMsg.setParams(askParams);
+		  		nettyClient.socketChannel.writeAndFlush(askMsg);
+	  		} else {
+	  		  	nettyClient.connectServer(nettyClient);
+	  		}
+	  	}
+    }
+	
+	public void connectServer(NettyClient nettyClient) {
+		try {
+			nettyClient.connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	  	LoginMsg loginMsg=new LoginMsg();
 	  	loginMsg.setPassword("yao");
 	  	loginMsg.setUserName("robin");
 	  	nettyClient.socketChannel.writeAndFlush(loginMsg);
-	  	while (true){
-	  		TimeUnit.SECONDS.sleep(3);
-	  		AskMsg askMsg=new AskMsg();
-	  		AskParams askParams=new AskParams();
-	  		askParams.setAuth("authToken");
-	  		askMsg.setParams(askParams);
-	  		nettyClient.socketChannel.writeAndFlush(askMsg);
-	  	}
-    }
+	}
 
     private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
     EventLoopGroup group = new NioEventLoopGroup();
