@@ -59,8 +59,8 @@ public class NettyClient {
 			e.printStackTrace();
 		}
 	  	LoginMsg loginMsg=new LoginMsg();
-	  	loginMsg.setPassword("yao");
-	  	loginMsg.setUserName("robin");
+	  	loginMsg.setPassword("fly");
+	  	loginMsg.setUserName("fly");
 	  	nettyClient.socketChannel.writeAndFlush(loginMsg);
 	}
 
