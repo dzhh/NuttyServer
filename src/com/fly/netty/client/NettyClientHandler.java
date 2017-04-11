@@ -7,13 +7,14 @@ import com.fly.netty.common.PingMsg;
 import com.fly.netty.common.ReplyClientBody;
 import com.fly.netty.common.ReplyMsg;
 import com.fly.netty.common.ReplyServerBody;
+import com.fly.netty.util.JsonUtil;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 
-public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
+public class NettyClientHandler extends SimpleChannelInboundHandler< String> {
     //利用写空闲发送心跳检测消息
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
@@ -31,15 +32,18 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
         }
     }
 //    @Override
-    protected void messageReceived(ChannelHandlerContext channelHandlerContext, BaseMsg baseMsg) throws Exception {
-        MsgType msgType=baseMsg.getType();
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, String baseMsgStr) throws Exception {
+    	BaseMsg baseMsg = JsonUtil.jsonToBean(baseMsgStr, BaseMsg.class);
+    	MsgType msgType=baseMsg.getType();
         switch (msgType){
             case LOGIN:{
                 //向服务器发起登录
                 LoginMsg loginMsg=new LoginMsg();
                 loginMsg.setPassword("yao");
                 loginMsg.setUserName("robin");
-                channelHandlerContext.writeAndFlush(loginMsg);
+//                channelHandlerContext.writeAndFlush(loginMsg);
+                String json = JsonUtil.beanToJson(loginMsg);
+                channelHandlerContext.writeAndFlush(json);
             }break;
             case PING:{
                 System.out.println("receive ping from server----------");
@@ -48,7 +52,9 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
                 ReplyClientBody replyClientBody=new ReplyClientBody("client info **** !!!");
                 ReplyMsg replyMsg=new ReplyMsg();
                 replyMsg.setBody(replyClientBody);
-                channelHandlerContext.writeAndFlush(replyMsg);
+//                channelHandlerContext.writeAndFlush(replyMsg);
+                String json = JsonUtil.beanToJson(replyMsg);
+                channelHandlerContext.writeAndFlush(json);
             }break;
             case REPLY:{
                 ReplyMsg replyMsg=(ReplyMsg)baseMsg;
@@ -60,8 +66,10 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
         ReferenceCountUtil.release(msgType);
     }
 	@Override
-	protected void channelRead0(ChannelHandlerContext channelHandlerContext, BaseMsg baseMsg) throws Exception {
+	protected void channelRead0(ChannelHandlerContext channelHandlerContext, String baseMsgStr) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(baseMsgStr);
+    	BaseMsg baseMsg = JsonUtil.jsonToBean(baseMsgStr, BaseMsg.class);
 		MsgType msgType = baseMsg.getType();
         switch (msgType){
             case LOGIN:{
@@ -69,7 +77,9 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
                 LoginMsg loginMsg=new LoginMsg();
                 loginMsg.setPassword("yao");
                 loginMsg.setUserName("robin");
-                channelHandlerContext.writeAndFlush(loginMsg);
+//                channelHandlerContext.writeAndFlush(loginMsg);
+                String json = JsonUtil.beanToJson(loginMsg);
+                channelHandlerContext.writeAndFlush(json);
             }break;
             case PING:{
                 System.out.println("receive ping from server----------");
@@ -78,12 +88,17 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
                 ReplyClientBody replyClientBody=new ReplyClientBody("client info **** !!!");
                 ReplyMsg replyMsg=new ReplyMsg();
                 replyMsg.setBody(replyClientBody);
-                channelHandlerContext.writeAndFlush(replyMsg);
+//                channelHandlerContext.writeAndFlush(replyMsg);
+                String json = JsonUtil.beanToJson(replyMsg);
+                channelHandlerContext.writeAndFlush(json);
             }break;
             case REPLY:{
-                ReplyMsg replyMsg=(ReplyMsg)baseMsg;
-                ReplyServerBody replyServerBody=(ReplyServerBody)replyMsg.getBody();
-                System.out.println("receive client msg: "+replyServerBody.getServerInfo());
+//                ReplyMsg replyMsg=(ReplyMsg)baseMsg;
+            	ReplyMsg replyMsg = JsonUtil.jsonToBean(baseMsgStr, ReplyMsg.class);
+//                ReplyServerBody replyServerBody = (ReplyServerBody)replyMsg.getBody();
+//                System.out.println("receive client msg: "+replyServerBody.getServerInfo());
+            	System.out.println("receive client msg: " + replyMsg.getBody().getServerInfo());
+            	
             }
             default:break;
         }

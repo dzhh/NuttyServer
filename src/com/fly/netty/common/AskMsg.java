@@ -5,13 +5,13 @@ public class AskMsg extends BaseMsg {
         super();
         setType(MsgType.ASK);
     }
-    private AskParams params;
- 
-    public AskParams getParams() {
-        return params;
-    }
- 
-    public void setParams(AskParams params) {
-        this.params = params;
-    }
+//    private AskParams params;
+// 
+//    public AskParams getParams() {
+//        return params;
+//    }
+// 
+//    public void setParams(AskParams params) {
+//        this.params = params;
+//    }
 }

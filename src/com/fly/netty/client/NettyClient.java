@@ -11,6 +11,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 
@@ -24,6 +26,7 @@ import com.fly.netty.common.AskParams;
 import com.fly.netty.common.Constants;
 import com.fly.netty.common.LoginMsg;
 import com.fly.netty.common.NettyConstant;
+import com.fly.netty.util.JsonUtil;
 
 
 public class NettyClient {
@@ -45,7 +48,9 @@ public class NettyClient {
 		  		AskParams askParams=new AskParams();
 		  		askParams.setAuth("authToken");
 		  		askMsg.setParams(askParams);
-		  		nettyClient.socketChannel.writeAndFlush(askMsg);
+		  		String json = JsonUtil.beanToJson(askMsg);
+//		  		nettyClient.socketChannel.writeAndFlush(askMsg);
+		  		nettyClient.socketChannel.writeAndFlush(json);
 	  		} else {
 	  		  	nettyClient.connectServer(nettyClient);
 	  		}
@@ -61,7 +66,9 @@ public class NettyClient {
 	  	LoginMsg loginMsg=new LoginMsg();
 	  	loginMsg.setPassword("fly");
 	  	loginMsg.setUserName("fly");
-	  	nettyClient.socketChannel.writeAndFlush(loginMsg);
+	  	String json = JsonUtil.beanToJson(loginMsg);
+	  	nettyClient.socketChannel.writeAndFlush(json);
+//	  	nettyClient.socketChannel.writeAndFlush(loginMsg);
 	}
 
     private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
@@ -80,8 +87,11 @@ public class NettyClient {
             @Override
             protected void initChannel(SocketChannel socketChannel) throws Exception {
                 socketChannel.pipeline().addLast(new IdleStateHandler(20,10,0));
-                socketChannel.pipeline().addLast(new ObjectEncoder());
-                socketChannel.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+//                socketChannel.pipeline().addLast(new ObjectEncoder());
+//                socketChannel.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+                socketChannel.pipeline().addLast("decoder", new StringDecoder());
+                socketChannel.pipeline().addLast("encoder", new StringEncoder());
+                
                 socketChannel.pipeline().addLast(new NettyClientHandler());
             }
         });

@@ -2,7 +2,7 @@ package com.fly.netty.common;
 
 import java.io.Serializable;
 
-public abstract class BaseMsg implements Serializable {
+public class BaseMsg implements Serializable {
     
 	private static final long serialVersionUID = 1L;
     
@@ -30,5 +30,26 @@ public abstract class BaseMsg implements Serializable {
  
     public void setType(MsgType type) {
         this.type = type;
+    }
+    
+    
+    private ReplyBody body;
+    
+    public ReplyBody getBody() {
+        return body;
+    }
+ 
+    public void setBody(ReplyBody body) {
+        this.body = body;
+    }
+    
+    private AskParams params;
+    
+    public AskParams getParams() {
+        return params;
+    }
+ 
+    public void setParams(AskParams params) {
+        this.params = params;
     }
 }

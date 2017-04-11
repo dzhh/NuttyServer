@@ -8,5 +8,15 @@ import java.io.Serializable;
  *
  */
 public class ReplyBody implements Serializable {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
+	
+	private String serverInfo;
+
+	public String getServerInfo() {
+		return serverInfo;
+	}
+
+	public void setServerInfo(String serverInfo) {
+		this.serverInfo = serverInfo;
+	}
 }

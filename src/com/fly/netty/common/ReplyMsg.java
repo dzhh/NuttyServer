@@ -10,13 +10,14 @@ public class ReplyMsg extends BaseMsg {
         super();
         setType(MsgType.REPLY);
     }
-    private ReplyBody body;
- 
-    public ReplyBody getBody() {
-        return body;
-    }
- 
-    public void setBody(ReplyBody body) {
-        this.body = body;
-    }
+    
+//    private ReplyBody body;
+// 
+//    public ReplyBody getBody() {
+//        return body;
+//    }
+// 
+//    public void setBody(ReplyBody body) {
+//        this.body = body;
+//    }
 }

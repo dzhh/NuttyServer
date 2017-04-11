@@ -9,6 +9,7 @@ import com.fly.netty.common.ReplyClientBody;
 import com.fly.netty.common.ReplyMsg;
 import com.fly.netty.common.ReplyServerBody;
 import com.fly.netty.server.NettyChannelMap;
+import com.fly.netty.util.JsonUtil;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -20,7 +21,7 @@ import io.netty.util.ReferenceCountUtil;
  * @author fly
  *
  */
-public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
+public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
 	
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
@@ -28,12 +29,16 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
     }
     
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, BaseMsg msg) throws Exception {
+	protected void channelRead0(ChannelHandlerContext ctx, String msgStr) throws Exception {
+		System.out.println(msgStr);
+		BaseMsg msg = JsonUtil.jsonToBean(msgStr, BaseMsg.class);
+		
 		// 判断是否登录
     	String clientId = NettyChannelMap.getClientId((SocketChannel)ctx.channel());
 		if(clientId == null) {
 			if(MsgType.LOGIN.equals(msg.getType())) {
-	            LoginMsg loginMsg=(LoginMsg)msg;
+				LoginMsg loginMsg = JsonUtil.jsonToBean(msgStr, LoginMsg.class);
+//	            LoginMsg loginMsg = (LoginMsg)msg;
 	            if("fly".equals(loginMsg.getUserName())&&"fly".equals(loginMsg.getPassword())){
 	                //登录成功,把channel存到服务端的map中
 	                NettyChannelMap.add(loginMsg.getClientId(),(SocketChannel)ctx.channel());
@@ -43,31 +48,42 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
 	            if(NettyChannelMap.getSocketChannel(msg.getClientId())==null){
 	                //说明未登录，或者连接断了，服务器向客户端发起登录请求，让客户端重新登录
 	                LoginMsg loginMsg = new LoginMsg();
-	                ctx.channel().writeAndFlush(loginMsg);
+//	                ctx.channel().writeAndFlush(loginMsg);
+	                String json = JsonUtil.beanToJson(loginMsg);
+	                ctx.channel().write(json);
+
 	            }
 	        }
 		}
 		
         switch (msg.getType()){
             case PING:{
-                PingMsg pingMsg=(PingMsg)msg;
-                PingMsg replyPing=new PingMsg();
-                NettyChannelMap.getSocketChannel(pingMsg.getClientId()).writeAndFlush(replyPing);
+//                PingMsg pingMsg=(PingMsg)msg;
+                PingMsg pingMsg = JsonUtil.jsonToBean(msgStr, PingMsg.class);
+                PingMsg replyPing = new PingMsg();
+//                NettyChannelMap.getSocketChannel(pingMsg.getClientId()).writeAndFlush(replyPing);
+//                NettyChannelMap.getSocketChannel(pingMsg.getClientId()).write(replyPing);
+                String json = JsonUtil.beanToJson(replyPing);
+                NettyChannelMap.getSocketChannel(pingMsg.getClientId()).write(json);
             }break;
             case ASK:{
                 //收到客户端的请求
-                AskMsg askMsg=(AskMsg)msg;
+//                AskMsg askMsg=(AskMsg)msg;
+            	AskMsg askMsg = JsonUtil.jsonToBean(msgStr, AskMsg.class);
                 if("authToken".equals(askMsg.getParams().getAuth())){
                     ReplyServerBody replyBody = new ReplyServerBody("server info $$$$ !!!");
                     ReplyMsg replyMsg = new ReplyMsg();
                     replyMsg.setBody(replyBody);
-                    NettyChannelMap.getSocketChannel(askMsg.getClientId()).writeAndFlush(replyMsg);
+//                    NettyChannelMap.getSocketChannel(askMsg.getClientId()).write(replyMsg);
+                    String json = JsonUtil.beanToJson(replyMsg);
+                  NettyChannelMap.getSocketChannel(askMsg.getClientId()).write(json);
                 }
             }break;
             case REPLY:{
                 //收到客户端回复
-                ReplyMsg replyMsg=(ReplyMsg)msg;
-                ReplyClientBody clientBody=(ReplyClientBody)replyMsg.getBody();
+//                ReplyMsg replyMsg = (ReplyMsg)msg;
+            	ReplyMsg replyMsg = JsonUtil.jsonToBean(msgStr, ReplyMsg.class);
+                ReplyClientBody clientBody = (ReplyClientBody)replyMsg.getBody();
                 System.out.println("receive client msg: "+clientBody.getClientInfo());
             }break;
             default:break;
