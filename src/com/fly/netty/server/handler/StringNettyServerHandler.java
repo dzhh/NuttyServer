@@ -21,7 +21,7 @@ import io.netty.util.ReferenceCountUtil;
  * @author fly
  *
  */
-public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
+public class StringNettyServerHandler extends SimpleChannelInboundHandler<String> {
 	
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {

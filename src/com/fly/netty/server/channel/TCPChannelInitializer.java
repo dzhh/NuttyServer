@@ -1,6 +1,6 @@
 package com.fly.netty.server.channel;
 
-import com.fly.netty.server.handler.NettyServerHandler;
+import com.fly.netty.server.handler.StringNettyServerHandler;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -22,7 +22,7 @@ public class TCPChannelInitializer <C extends Channel> extends ChannelInitialize
 //        p.addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
 		pipeline.addLast("decoder", new StringDecoder());
 		pipeline.addLast("encoder", new StringEncoder());
-		pipeline.addLast(new NettyServerHandler());
+		pipeline.addLast(new StringNettyServerHandler());
 	}
 
 }
