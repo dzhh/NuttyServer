@@ -1,13 +1,11 @@
 package com.fly.netty.server.handler;
 
-import com.fly.netty.common.AskMsg;
+import com.fly.netty.common.TokenMsg;
 import com.fly.netty.common.BaseMsg;
 import com.fly.netty.common.LoginMsg;
 import com.fly.netty.common.MsgType;
 import com.fly.netty.common.PingMsg;
-import com.fly.netty.common.ReplyClientBody;
 import com.fly.netty.common.ReplyMsg;
-import com.fly.netty.common.ReplyServerBody;
 import com.fly.netty.server.NettyChannelMap;
 import com.fly.netty.util.JsonUtil;
 
@@ -39,7 +37,7 @@ public class StringNettyServerHandler extends SimpleChannelInboundHandler<String
 			if(MsgType.LOGIN.equals(msg.getType())) {
 				LoginMsg loginMsg = JsonUtil.jsonToBean(msgStr, LoginMsg.class);
 //	            LoginMsg loginMsg = (LoginMsg)msg;
-	            if("fly".equals(loginMsg.getUserName())&&"fly".equals(loginMsg.getPassword())){
+	            if("fly".equals(loginMsg.getUserName()) && "fly".equals(loginMsg.getPassword())){
 	                //登录成功,把channel存到服务端的map中
 	                NettyChannelMap.add(loginMsg.getClientId(),(SocketChannel)ctx.channel());
 	                System.out.println("client"+loginMsg.getClientId()+" 登录成功");
@@ -66,14 +64,13 @@ public class StringNettyServerHandler extends SimpleChannelInboundHandler<String
                 String json = JsonUtil.beanToJson(replyPing);
                 NettyChannelMap.getSocketChannel(pingMsg.getClientId()).write(json);
             }break;
-            case ASK:{
+            case TOKEN:{
                 //收到客户端的请求
 //                AskMsg askMsg=(AskMsg)msg;
-            	AskMsg askMsg = JsonUtil.jsonToBean(msgStr, AskMsg.class);
-                if("authToken".equals(askMsg.getParams().getAuth())){
-                    ReplyServerBody replyBody = new ReplyServerBody("server info $$$$ !!!");
+            	TokenMsg askMsg = JsonUtil.jsonToBean(msgStr, TokenMsg.class);
+                if("authToken".equals(askMsg.getAuth())){
                     ReplyMsg replyMsg = new ReplyMsg();
-                    replyMsg.setBody(replyBody);
+                    replyMsg.setServerInfo("server info $$$$ !!!");
 //                    NettyChannelMap.getSocketChannel(askMsg.getClientId()).write(replyMsg);
                     String json = JsonUtil.beanToJson(replyMsg);
                   NettyChannelMap.getSocketChannel(askMsg.getClientId()).write(json);
@@ -83,8 +80,7 @@ public class StringNettyServerHandler extends SimpleChannelInboundHandler<String
                 //收到客户端回复
 //                ReplyMsg replyMsg = (ReplyMsg)msg;
             	ReplyMsg replyMsg = JsonUtil.jsonToBean(msgStr, ReplyMsg.class);
-                ReplyClientBody clientBody = (ReplyClientBody)replyMsg.getBody();
-                System.out.println("receive client msg: "+clientBody.getClientInfo());
+                System.out.println("receive client msg: " + replyMsg.getClientInfo());
             }break;
             default:break;
         }

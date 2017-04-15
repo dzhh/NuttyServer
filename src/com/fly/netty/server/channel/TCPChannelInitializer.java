@@ -20,6 +20,8 @@ public class TCPChannelInitializer <C extends Channel> extends ChannelInitialize
 		//API并不复杂,可以应用到任何对象,支持 java.io.Serializable 接口。但它也不是非常高效的。
 //		p.addLast(new ObjectEncoder());
 //        p.addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+		
+		
 		pipeline.addLast("decoder", new StringDecoder());
 		pipeline.addLast("encoder", new StringEncoder());
 		pipeline.addLast(new StringNettyServerHandler());

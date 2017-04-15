@@ -6,18 +6,33 @@ package com.fly.netty.common;
  *
  */
 public class ReplyMsg extends BaseMsg {
-    public ReplyMsg() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ReplyMsg() {
         super();
         setType(MsgType.REPLY);
     }
     
-//    private ReplyBody body;
-// 
-//    public ReplyBody getBody() {
-//        return body;
-//    }
-// 
-//    public void setBody(ReplyBody body) {
-//        this.body = body;
-//    }
+    private String serverInfo;
+
+	public String getServerInfo() {
+		return serverInfo;
+	}
+
+	public void setServerInfo(String serverInfo) {
+		this.serverInfo = serverInfo;
+	}
+	
+	private String clientInfo;
+	 
+    public String getClientInfo() {
+        return clientInfo;
+    }
+ 
+    public void setClientInfo(String clientInfo) {
+        this.clientInfo = clientInfo;
+    }
 }

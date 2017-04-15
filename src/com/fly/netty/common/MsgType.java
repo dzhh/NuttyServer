@@ -6,5 +6,5 @@ package com.fly.netty.common;
  *
  */
 public enum  MsgType {
-    PING,ASK,REPLY,LOGIN
+    PING, TOKEN, REPLY, LOGIN
 }

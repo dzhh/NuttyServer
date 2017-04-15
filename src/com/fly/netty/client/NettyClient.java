@@ -21,8 +21,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.fly.netty.common.AskMsg;
-import com.fly.netty.common.AskParams;
+import com.fly.netty.common.TokenMsg;
 import com.fly.netty.common.Constants;
 import com.fly.netty.common.LoginMsg;
 import com.fly.netty.common.NettyConstant;
@@ -44,10 +43,8 @@ public class NettyClient {
 			}
 	  		System.out.println("nettyClient.socketChannel.isActive() = " + nettyClient.socketChannel.isActive());
 	  		if(nettyClient.socketChannel.isActive()) {
-	  			AskMsg askMsg = new AskMsg();
-		  		AskParams askParams=new AskParams();
-		  		askParams.setAuth("authToken");
-		  		askMsg.setParams(askParams);
+	  			TokenMsg askMsg = new TokenMsg();
+		  		askMsg.setAuth("authToken");
 		  		String json = JsonUtil.beanToJson(askMsg);
 //		  		nettyClient.socketChannel.writeAndFlush(askMsg);
 		  		nettyClient.socketChannel.writeAndFlush(json);

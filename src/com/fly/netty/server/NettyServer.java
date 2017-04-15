@@ -10,7 +10,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.util.concurrent.TimeUnit;
 
-import com.fly.netty.common.AskMsg;
+import com.fly.netty.common.TokenMsg;
 import com.fly.netty.common.NettyConstant;
 import com.fly.netty.server.channel.TCPChannelInitializer;
 
@@ -26,7 +26,7 @@ public class NettyServer {
     	while (true){
             SocketChannel channel = (SocketChannel)NettyChannelMap.getSocketChannel("001");
             if(channel != null){
-                AskMsg askMsg=new AskMsg();
+                TokenMsg askMsg=new TokenMsg();
                 channel.writeAndFlush(askMsg);
             }
             TimeUnit.SECONDS.sleep(5);

@@ -32,24 +32,4 @@ public class BaseMsg implements Serializable {
         this.type = type;
     }
     
-    
-    private ReplyBody body;
-    
-    public ReplyBody getBody() {
-        return body;
-    }
- 
-    public void setBody(ReplyBody body) {
-        this.body = body;
-    }
-    
-    private AskParams params;
-    
-    public AskParams getParams() {
-        return params;
-    }
- 
-    public void setParams(AskParams params) {
-        this.params = params;
-    }
 }
