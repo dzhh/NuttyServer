@@ -21,12 +21,19 @@ import com.fly.netty.server.channel.TCPChannelInitializer;
  */
 public class NettyServer {
 
+	/**
+	 * 启动
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
+		
     	new NettyServer().bind();
+    	
     	while (true){
             SocketChannel channel = (SocketChannel)NettyChannelMap.getSocketChannel("001");
             if(channel != null){
-                TokenMsg askMsg=new TokenMsg();
+                TokenMsg askMsg = new TokenMsg();
                 channel.writeAndFlush(askMsg);
             }
             TimeUnit.SECONDS.sleep(5);
