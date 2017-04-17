@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="NuttyServer" default="jar" basedir="." >
+	<!-- <property name="src.dir" value="src"/> -->
+	<property name="target.dir" value="D:/workspace/git/HejorServer/WebContent/WEB-INF/lib"/>
+	<property name="classes" value="./bin" />
+	
+	<!--清理任务-->
+	<target name="clean">
+		<delete dir="${target.dir}">
+				<include name="NuttyServer.jar" />
+		</delete>
+	</target>
+	
+	<!--创建目录-->
+	<target name="init" depends="clean">
+		<mkdir dir="target"/>
+	</target>
+
+	<!--将源代码打成jar包的形式-->
+	<target name="jar" depends="init">
+		<jar jarfile="${target.dir}/NuttyServer.jar" >
+			<fileset dir="${classes}">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="./src">
+				<include name="com/fly/mapping/*.xml" />
+			</fileset>
+		</jar>
+	</target>
+</project>
