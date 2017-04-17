@@ -59,7 +59,8 @@ public class NettyClient {
 	
 	public void connectServer(NettyClient nettyClient) {
 		try {
-			nettyClient.connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+//			nettyClient.connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+			nettyClient.connect(10080, "139.196.172.139");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -92,8 +93,10 @@ public class NettyClient {
         bootstrap.remoteAddress(host,port);
         bootstrap.handler(new ClientTCPChannelInitializer<SocketChannel>());
         
-        ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port),
-			    new InetSocketAddress(NettyConstant.LOCALIP, NettyConstant.LOCAL_PORT)).sync();
+//        ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port),
+//			    new InetSocketAddress(NettyConstant.LOCALIP, NettyConstant.LOCAL_PORT)).sync();
+      ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port),
+			    new InetSocketAddress("0.0.0.0", NettyConstant.LOCAL_PORT)).sync();
         if (future.isSuccess()) {
             socketChannel = (SocketChannel)future.channel();
             System.out.println("connect server  成功---------");
