@@ -1,5 +1,7 @@
 package com.fly.netty.server.channel;
 
+import com.fly.netty.server.handler.HeartBeatRespHandler;
+import com.fly.netty.server.handler.LoginAuthRespHandler;
 import com.fly.netty.server.handler.StringNettyServerHandler;
 
 import io.netty.channel.Channel;
@@ -11,7 +13,7 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
-public class TCPChannelInitializer <C extends Channel> extends ChannelInitializer<Channel> {
+public class ServerTCPChannelInitializer <C extends Channel> extends ChannelInitializer<Channel> {
 
 	@Override
 	protected void initChannel(Channel ch) throws Exception {
@@ -21,9 +23,11 @@ public class TCPChannelInitializer <C extends Channel> extends ChannelInitialize
 //		p.addLast(new ObjectEncoder());
 //        p.addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
 		
-		
 		pipeline.addLast("decoder", new StringDecoder());
 		pipeline.addLast("encoder", new StringEncoder());
+		
+		pipeline.addLast(new LoginAuthRespHandler());
+		pipeline.addLast(new HeartBeatRespHandler());
 		pipeline.addLast(new StringNettyServerHandler());
 	}
 

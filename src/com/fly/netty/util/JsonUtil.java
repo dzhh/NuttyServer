@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.fly.netty.common.LoginMsg;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -365,14 +364,6 @@ public class JsonUtil {
 
 		return doubleArray;
 
-	}
-	
-	
-	public static void main(String[] args) {
-	  	LoginMsg loginMsg=new LoginMsg();
-	  	loginMsg.setPassword("fly");
-	  	loginMsg.setUserName("fly");
-	  	String json = JsonUtil.beanToJson(loginMsg);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.fly.netty.client.handle;
+package com.fly.netty.server.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -10,8 +10,12 @@ import com.fly.netty.common.MessageType;
 import com.fly.netty.common.NettyMessage;
 import com.fly.netty.util.JsonUtil;
 
-
-public class HeartBeatReqHandler extends SimpleChannelInboundHandler<String> {
+/**
+ * 
+ * @author fly
+ *
+ */
+public class HeartBeatRespHandler extends SimpleChannelInboundHandler<String> {
 
     private volatile ScheduledFuture<?> heartBeat;
 
@@ -30,21 +34,20 @@ public class HeartBeatReqHandler extends SimpleChannelInboundHandler<String> {
 	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
 //		NettyMessage message = (NettyMessage) msg;
 		NettyMessage nettyMessage = JsonUtil.jsonToBean(msg, NettyMessage.class);
-		// 握手成功，主动发送心跳消息
-		if (nettyMessage.getHeader() != null && nettyMessage.getHeader().getType() == MessageType.LOGIN_RESP.value()) {
-			NettyMessage heatBeat = buildHeatBeat();
-		    System.out.println("Client send heart beat messsage to server : ---> " + heatBeat);
+		// 回复心跳
+		if (nettyMessage.getHeader() != null && nettyMessage.getHeader().getType() == MessageType.HEARTBEAT_REQ.value()) {
+		    NettyMessage heatBeat = buildHeatBeat();
+		    System.out.println("Server send heart beat messsage to client : ---> " + heatBeat);
 		    ctx.writeAndFlush(JsonUtil.beanToJson(heatBeat));
-		} else if (nettyMessage.getHeader() != null && nettyMessage.getHeader().getType() == MessageType.HEARTBEAT_RESP.value()) {
-		    System.out.println("Client receive server heart beat message : ---> " + msg);
-		} else
-		    ctx.fireChannelRead(msg);
+		} else {
+			ctx.fireChannelRead(msg);
+		}
 	}
 	
 	private NettyMessage buildHeatBeat() {
 	    NettyMessage message = new NettyMessage();
 	    Header header = new Header();
-	    header.setType(MessageType.HEARTBEAT_REQ.value());
+	    header.setType(MessageType.HEARTBEAT_RESP.value());
 	    message.setHeader(header);
 	    return message;
 	}

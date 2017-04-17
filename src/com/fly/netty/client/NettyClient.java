@@ -8,33 +8,29 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-import io.netty.handler.timeout.IdleStateHandler;
-import io.netty.handler.timeout.ReadTimeoutHandler;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.fly.netty.common.TokenMsg;
-import com.fly.netty.common.Constants;
-import com.fly.netty.common.LoginMsg;
+import com.fly.netty.client.channel.ClientTCPChannelInitializer;
+import com.fly.netty.common.Body;
+import com.fly.netty.common.Header;
+import com.fly.netty.common.MessageType;
 import com.fly.netty.common.NettyConstant;
+import com.fly.netty.common.NettyMessage;
 import com.fly.netty.util.JsonUtil;
 
 
 public class NettyClient {
 	
+	
 	public static void main(String[]args) {
-    	Constants.setClientId("001");
 //      NettyClientBootstrap bootstrap=new NettyClientBootstrap(9999,"localhost");
 	  	NettyClient nettyClient = new NettyClient();
 	  	nettyClient.connectServer(nettyClient);
+	  	int retry = 0;
 	  	while (true){
 	  		try {
 				TimeUnit.SECONDS.sleep(3);
@@ -43,13 +39,20 @@ public class NettyClient {
 			}
 	  		System.out.println("nettyClient.socketChannel.isActive() = " + nettyClient.socketChannel.isActive());
 	  		if(nettyClient.socketChannel.isActive()) {
-	  			TokenMsg askMsg = new TokenMsg();
-		  		askMsg.setAuth("authToken");
-		  		String json = JsonUtil.beanToJson(askMsg);
-//		  		nettyClient.socketChannel.writeAndFlush(askMsg);
-		  		nettyClient.socketChannel.writeAndFlush(json);
+	  			retry = 0;
+	  			NettyMessage nettyMessageResp = new NettyMessage();
+            	Header header = new Header();
+            	header.setType(MessageType.HEARTBEAT_REQ.value());
+            	nettyMessageResp.setHeader(header);
+                
+		  		nettyClient.socketChannel.writeAndFlush(JsonUtil.beanToJson(nettyMessageResp));
 	  		} else {
-	  		  	nettyClient.connectServer(nettyClient);
+	  			System.out.println("retry = " + retry++);
+	  			if(retry < 5) {
+		  		  	nettyClient.connectServer(nettyClient);
+	  			} else {
+	  				break;
+	  			}
 	  		}
 	  	}
     }
@@ -60,10 +63,17 @@ public class NettyClient {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	  	LoginMsg loginMsg=new LoginMsg();
-	  	loginMsg.setPassword("fly");
-	  	loginMsg.setUserName("fly");
-	  	String json = JsonUtil.beanToJson(loginMsg);
+		
+		NettyMessage nettyMessageResp = new NettyMessage();
+    	Header header = new Header();
+    	header.setType(MessageType.LOGIN_REQ.value());
+    	header.setSessionID("001");
+    	nettyMessageResp.setHeader(header);
+		Body body = new Body();
+	  	body.setPassword("fly");
+	  	body.setUserName("fly");
+	  	nettyMessageResp.setBody(body);
+	  	String json = JsonUtil.beanToJson(nettyMessageResp);
 	  	nettyClient.socketChannel.writeAndFlush(json);
 //	  	nettyClient.socketChannel.writeAndFlush(loginMsg);
 	}
@@ -80,21 +90,10 @@ public class NettyClient {
         bootstrap.channel(NioSocketChannel.class);
         bootstrap.option(ChannelOption.SO_KEEPALIVE,true);
         bootstrap.remoteAddress(host,port);
-        bootstrap.handler(new ChannelInitializer<SocketChannel>() {
-            @Override
-            protected void initChannel(SocketChannel socketChannel) throws Exception {
-                socketChannel.pipeline().addLast(new IdleStateHandler(20,10,0));
-//                socketChannel.pipeline().addLast(new ObjectEncoder());
-//                socketChannel.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
-                socketChannel.pipeline().addLast("decoder", new StringDecoder());
-                socketChannel.pipeline().addLast("encoder", new StringEncoder());
-                
-                socketChannel.pipeline().addLast(new NettyClientHandler());
-            }
-        });
+        bootstrap.handler(new ClientTCPChannelInitializer<SocketChannel>());
+        
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port),
-			    new InetSocketAddress(NettyConstant.LOCALIP,
-					    NettyConstant.LOCAL_PORT)).sync();
+			    new InetSocketAddress(NettyConstant.LOCALIP, NettyConstant.LOCAL_PORT)).sync();
         if (future.isSuccess()) {
             socketChannel = (SocketChannel)future.channel();
             System.out.println("connect server  成功---------");
@@ -102,12 +101,5 @@ public class NettyClient {
 	        
     }
 
-    /**
-     * @param args
-     * @throws Exception
-     */
-//    public static void main(String[] args) throws Exception {
-//    	new NettyClient().connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
-//    }
 
 }

@@ -1,40 +1,26 @@
-package com.fly.netty.struct;
+package com.fly.netty.common;
 
 public final class NettyMessage {
 
     private Header header;
 
-    private Object body;
+    public Header getHeader() {
+		return header;
+	}
 
-    /**
-     * @return the header
-     */
-    public final Header getHeader() {
-    	return header;
-    }
+	public void setHeader(Header header) {
+		this.header = header;
+	}
+	
+	private Body body;
+	
+	public Body getBody() {
+		return body;
+	}
 
-    /**
-     * @param header
-     *            the header to set
-     */
-    public final void setHeader(Header header) {
-    	this.header = header;
-    }
-
-    /**
-     * @return the body
-     */
-    public final Object getBody() {
-    	return body;
-    }
-
-    /**
-     * @param body
-     *            the body to set
-     */
-    public final void setBody(Object body) {
-    	this.body = body;
-    }
+	public void setBody(Body body) {
+		this.body = body;
+	}
 
     @Override
     public String toString() {

@@ -10,9 +10,12 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.util.concurrent.TimeUnit;
 
-import com.fly.netty.common.TokenMsg;
+import com.fly.netty.common.Header;
+import com.fly.netty.common.MessageType;
 import com.fly.netty.common.NettyConstant;
-import com.fly.netty.server.channel.TCPChannelInitializer;
+import com.fly.netty.common.NettyMessage;
+import com.fly.netty.server.channel.ServerTCPChannelInitializer;
+import com.fly.netty.util.JsonUtil;
 
 /**
  * 主要包含对SocketChannel引用的Map,ChannelHandler的实现和Bootstrap
@@ -33,8 +36,12 @@ public class NettyServer {
     	while (true){
             SocketChannel channel = (SocketChannel)NettyChannelMap.getSocketChannel("001");
             if(channel != null){
-                TokenMsg askMsg = new TokenMsg();
-                channel.writeAndFlush(askMsg);
+        		NettyMessage nettyMessageResp = new NettyMessage();
+            	Header header = new Header();
+            	header.setType(MessageType.HEARTBEAT_REQ.value());
+            	nettyMessageResp.setHeader(header);
+                
+                channel.writeAndFlush(JsonUtil.beanToJson(nettyMessageResp));
             }
             TimeUnit.SECONDS.sleep(5);
         }
@@ -55,14 +62,8 @@ public class NettyServer {
         bootstrap.option(ChannelOption.TCP_NODELAY, true);
         //保持长连接状态
         bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
-        bootstrap.childHandler(new TCPChannelInitializer<SocketChannel>());
+        bootstrap.childHandler(new ServerTCPChannelInitializer<SocketChannel>());
 
-
-//		bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-//			.option(ChannelOption.SO_BACKLOG, 100)
-//			.handler(new LoggingHandler(LogLevel.INFO))
-//			//绑定IO事件的处理类
-//			.childHandler(new TCPChannelInitializer<SocketChannel>());
 	
 		// 绑定端口，同步等待成功
         ChannelFuture f= bootstrap.bind(NettyConstant.REMOTEIP, NettyConstant.PORT).sync();

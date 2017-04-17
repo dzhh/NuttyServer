@@ -1,15 +1,21 @@
-package com.fly.netty.struct;
+package com.fly.netty.common;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Header {
+public final class Header implements Serializable  {
 
-    private int crcCode = 0xabef0101;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private int crcCode = 0xabef0101;
 
     private int length;// 消息长度
 
-    private long sessionID;// 会话ID
+    private String sessionID;// 会话ID
 
     private byte type;// 消息类型
 
@@ -50,7 +56,7 @@ public final class Header {
     /**
      * @return the sessionID
      */
-    public final long getSessionID() {
+    public final String getSessionID() {
     	return sessionID;
     }
 
@@ -58,7 +64,7 @@ public final class Header {
      * @param sessionID
      *            the sessionID to set
      */
-    public final void setSessionID(long sessionID) {
+    public final void setSessionID(String sessionID) {
     	this.sessionID = sessionID;
     }
 

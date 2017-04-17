@@ -1,64 +1,38 @@
-package com.fly.netty.client;
+package com.fly.netty.client.handle;
 
 import com.fly.netty.common.MessageType;
-import com.fly.netty.struct.Header;
-import com.fly.netty.struct.NettyMessage;
+import com.fly.netty.common.NettyMessage;
+import com.fly.netty.util.JsonUtil;
 
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPipeline;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 
-public class LoginAuthReqHandler extends ChannelHandlerAdapter {
+public class LoginAuthReqHandler extends SimpleChannelInboundHandler<String> {
 
-    /**
-     * Calls {@link ChannelHandlerContext#fireChannelActive()} to forward to the
-     * next {@link ChannelHandler} in the {@link ChannelPipeline}.
-     * 
-     * Sub-classes may override this method to change behavior.
-     */
-//    @Override
+    @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-    	ctx.writeAndFlush(buildLoginReq());
     }
 
-    /**
-     * Calls {@link ChannelHandlerContext#fireChannelRead(Object)} to forward to
-     * the next {@link ChannelHandler} in the {@link ChannelPipeline}.
-     * 
-     * Sub-classes may override this method to change behavior.
-     */
-//    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-    	NettyMessage message = (NettyMessage) msg;
-
-		// 如果是握手应答消息，需要判断是否认证成功
-		if (message.getHeader() != null
-			&& message.getHeader().getType() == MessageType.LOGIN_RESP
-				.value()) {
-		    byte loginResult = (byte) message.getBody();
-		    if (loginResult != (byte) 0) {
-			// 握手失败，关闭连接
-			ctx.close();
-		    } else {
-			System.out.println("Login is ok : " + message);
-			ctx.fireChannelRead(msg);
-		    }
-		} else
-		    ctx.fireChannelRead(msg);
-	    }
-	
-	    private NettyMessage buildLoginReq() {
-		NettyMessage message = new NettyMessage();
-		Header header = new Header();
-		header.setType(MessageType.LOGIN_REQ.value());
-		message.setHeader(header);
-		return message;
-    }
-
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
-	    throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
     	ctx.fireExceptionCaught(cause);
     }
+
+	@Override
+	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+		NettyMessage nettyMessage = JsonUtil.jsonToBean(msg, NettyMessage.class);
+		// 如果是握手应答消息，需要判断是否认证成功
+		if (nettyMessage.getHeader().getType() == MessageType.LOGIN_RESP.value()) {
+		    byte loginResult = (byte) nettyMessage.getBody().getLoginResult();
+		    if (loginResult != (byte) 0) {
+				// 握手失败，关闭连接
+				ctx.close();
+		    } else {
+				System.out.println("Login is ok : " + nettyMessage);
+				ctx.fireChannelRead(msg);
+		    }
+		} else {
+		    ctx.fireChannelRead(msg);
+		}
+	}
 }

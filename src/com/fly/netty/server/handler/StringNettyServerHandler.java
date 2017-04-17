@@ -1,14 +1,12 @@
 package com.fly.netty.server.handler;
 
-import com.fly.netty.common.TokenMsg;
-import com.fly.netty.common.BaseMsg;
-import com.fly.netty.common.LoginMsg;
-import com.fly.netty.common.MsgType;
-import com.fly.netty.common.PingMsg;
-import com.fly.netty.common.ReplyMsg;
+import com.fly.netty.common.Header;
+import com.fly.netty.common.MessageType;
+import com.fly.netty.common.NettyMessage;
 import com.fly.netty.server.NettyChannelMap;
 import com.fly.netty.util.JsonUtil;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
@@ -29,62 +27,22 @@ public class StringNettyServerHandler extends SimpleChannelInboundHandler<String
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, String msgStr) throws Exception {
 		System.out.println(msgStr);
-		BaseMsg msg = JsonUtil.jsonToBean(msgStr, BaseMsg.class);
-		
-		// 判断是否登录
+		NettyMessage nettyMessage = JsonUtil.jsonToBean(msgStr, NettyMessage.class);
     	String clientId = NettyChannelMap.getClientId((SocketChannel)ctx.channel());
-		if(clientId == null) {
-			if(MsgType.LOGIN.equals(msg.getType())) {
-				LoginMsg loginMsg = JsonUtil.jsonToBean(msgStr, LoginMsg.class);
-//	            LoginMsg loginMsg = (LoginMsg)msg;
-	            if("fly".equals(loginMsg.getUserName()) && "fly".equals(loginMsg.getPassword())){
-	                //登录成功,把channel存到服务端的map中
-	                NettyChannelMap.add(loginMsg.getClientId(),(SocketChannel)ctx.channel());
-	                System.out.println("client"+loginMsg.getClientId()+" 登录成功");
-	            }
-	        } else {
-	            if(NettyChannelMap.getSocketChannel(msg.getClientId())==null){
-	                //说明未登录，或者连接断了，服务器向客户端发起登录请求，让客户端重新登录
-	                LoginMsg loginMsg = new LoginMsg();
-//	                ctx.channel().writeAndFlush(loginMsg);
-	                String json = JsonUtil.beanToJson(loginMsg);
-	                ctx.channel().write(json);
-
-	            }
-	        }
-		}
-		
-        switch (msg.getType()){
-            case PING:{
-//                PingMsg pingMsg=(PingMsg)msg;
-                PingMsg pingMsg = JsonUtil.jsonToBean(msgStr, PingMsg.class);
-                PingMsg replyPing = new PingMsg();
-//                NettyChannelMap.getSocketChannel(pingMsg.getClientId()).writeAndFlush(replyPing);
-//                NettyChannelMap.getSocketChannel(pingMsg.getClientId()).write(replyPing);
-                String json = JsonUtil.beanToJson(replyPing);
-                NettyChannelMap.getSocketChannel(pingMsg.getClientId()).write(json);
-            }break;
-            case TOKEN:{
-                //收到客户端的请求
-//                AskMsg askMsg=(AskMsg)msg;
-            	TokenMsg askMsg = JsonUtil.jsonToBean(msgStr, TokenMsg.class);
-                if("authToken".equals(askMsg.getAuth())){
-                    ReplyMsg replyMsg = new ReplyMsg();
-                    replyMsg.setServerInfo("server info $$$$ !!!");
-//                    NettyChannelMap.getSocketChannel(askMsg.getClientId()).write(replyMsg);
-                    String json = JsonUtil.beanToJson(replyMsg);
-                  NettyChannelMap.getSocketChannel(askMsg.getClientId()).write(json);
-                }
-            }break;
-            case REPLY:{
-                //收到客户端回复
-//                ReplyMsg replyMsg = (ReplyMsg)msg;
-            	ReplyMsg replyMsg = JsonUtil.jsonToBean(msgStr, ReplyMsg.class);
-                System.out.println("receive client msg: " + replyMsg.getClientInfo());
-            }break;
-            default:break;
-        }
-        ReferenceCountUtil.release(msg);
+    	Channel channel = NettyChannelMap.getSocketChannel(clientId);
+    	
+    	if(nettyMessage.getHeader().getType() == MessageType.SERVICE_REQ.value()) {
+    		NettyMessage nettyMessageResp = new NettyMessage();
+        	Header header = new Header();
+        	header.setType(MessageType.SERVICE_RESP.value());
+        	nettyMessageResp.setHeader(header);
+//            PingMsg pingMsg=(PingMsg)msg;
+//            NettyChannelMap.getSocketChannel(pingMsg.getClientId()).writeAndFlush(replyPing);
+//            NettyChannelMap.getSocketChannel(pingMsg.getClientId()).write(replyPing);
+            String json = JsonUtil.beanToJson(nettyMessageResp);
+            channel.write(json);
+    	}
+        ReferenceCountUtil.release(msgStr);
 	}
 	
 	@Override
