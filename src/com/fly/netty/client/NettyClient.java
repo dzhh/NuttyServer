@@ -29,9 +29,14 @@ public class NettyClient {
 	public static void main(String[]args) {
 //      NettyClientBootstrap bootstrap=new NettyClientBootstrap(9999,"localhost");
 	  	NettyClient nettyClient = new NettyClient();
-	  	nettyClient.connectServer(nettyClient);
-	  	int retry = 0;
-	  	while (true){
+//	  	nettyClient.connectServer(nettyClient, 10080, "139.196.172.139");
+	  	nettyClient.connectServer(nettyClient, 10080, "127.0.0.1");
+//	  	nettyClient.heartBeat(nettyClient);
+    }
+	
+	public void heartBeat(NettyClient nettyClient) {
+		int retry = 0;
+		while (true){
 	  		try {
 				TimeUnit.SECONDS.sleep(3);
 			} catch (InterruptedException e) {
@@ -49,18 +54,19 @@ public class NettyClient {
 	  		} else {
 	  			System.out.println("retry = " + retry++);
 	  			if(retry < 5) {
-		  		  	nettyClient.connectServer(nettyClient);
+		  		  	nettyClient.connectServer(nettyClient, 10080, "139.196.172.139");
 	  			} else {
 	  				break;
 	  			}
 	  		}
 	  	}
-    }
+	}
 	
-	public void connectServer(NettyClient nettyClient) {
+	public void connectServer(NettyClient nettyClient, int port, String ip) {
 		try {
 //			nettyClient.connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
-			nettyClient.connect(10080, "139.196.172.139");
+//			nettyClient.connect(10080, "139.196.172.139");
+			nettyClient.connect(port, ip);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

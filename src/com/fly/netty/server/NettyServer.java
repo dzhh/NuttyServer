@@ -31,23 +31,23 @@ public class NettyServer {
 	 */
 	public static void main(String[] args) throws Exception {
 		
-    	new NettyServer().bind();
+    	new NettyServer().bind("0.0.0.0", NettyConstant.PORT);
     	
     	while (true){
             SocketChannel channel = (SocketChannel)NettyChannelMap.getSocketChannel("001");
             if(channel != null){
-        		NettyMessage nettyMessageResp = new NettyMessage();
+        		NettyMessage nettyMessage = new NettyMessage();
             	Header header = new Header();
-            	header.setType(MessageType.HEARTBEAT_REQ.value());
-            	nettyMessageResp.setHeader(header);
+            	header.setType(MessageType.SENDMSG_REQ.value());
+            	nettyMessage.setHeader(header);
                 
-                channel.writeAndFlush(JsonUtil.beanToJson(nettyMessageResp));
+                channel.writeAndFlush(JsonUtil.beanToJson(nettyMessage));
             }
             TimeUnit.SECONDS.sleep(5);
         }
     }
 	
-    public void bind() throws Exception {
+    public void bind(String ip, int port) throws Exception {
 		// 配置服务端的NIO线程组  NioEventLoopGroup是个线程组
     	// 一个用于服务器端接受客户端的连接
     	// 一个用于进行SocketChannel的读写
@@ -64,13 +64,14 @@ public class NettyServer {
         bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
         bootstrap.childHandler(new ServerTCPChannelInitializer<SocketChannel>());
 
-	
+
 		// 绑定端口，同步等待成功
-        ChannelFuture f= bootstrap.bind("0.0.0.0", NettyConstant.PORT).sync();
+        ChannelFuture f= bootstrap.bind(ip, port).sync();
+//        ChannelFuture f= bootstrap.bind("0.0.0.0", NettyConstant.PORT).sync();
 //        bootstrap.bind(NettyConstant.REMOTEIP, NettyConstant.PORT).sync();
         if(f.isSuccess()) {
     		System.out.println("Netty server start ok : " + ("0.0.0.0" + " : " + NettyConstant.PORT));
         }
     }
-    
+
 }

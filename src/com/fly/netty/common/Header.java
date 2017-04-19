@@ -22,98 +22,62 @@ public final class Header implements Serializable  {
     private byte priority;// 消息优先级
 
     private Map<String, Object> attachment = new HashMap<String, Object>(); // 附件
+    
+    public int getCrcCode() {
+		return crcCode;
+	}
 
-    /**
-     * @return the crcCode
-     */
-    public final int getCrcCode() {
-    	return crcCode;
-    }
+	public void setCrcCode(int crcCode) {
+		this.crcCode = crcCode;
+	}
 
-    /**
-     * @param crcCode
-     *            the crcCode to set
-     */
-    public final void setCrcCode(int crcCode) {
-    	this.crcCode = crcCode;
-    }
+	public int getLength() {
+		return length;
+	}
 
-    /**
-     * @return the length
-     */
-    public final int getLength() {
-    	return length;
-    }
+	public void setLength(int length) {
+		this.length = length;
+	}
 
-    /**
-     * @param length
-     *            the length to set
-     */
-    public final void setLength(int length) {
-    	this.length = length;
-    }
+	public String getSessionID() {
+		return sessionID;
+	}
 
-    /**
-     * @return the sessionID
-     */
-    public final String getSessionID() {
-    	return sessionID;
-    }
+	public void setSessionID(String sessionID) {
+		this.sessionID = sessionID;
+	}
 
-    /**
-     * @param sessionID
-     *            the sessionID to set
-     */
-    public final void setSessionID(String sessionID) {
-    	this.sessionID = sessionID;
-    }
+	public byte getType() {
+		return type;
+	}
 
-    /**
-     * @return the type
-     */
-    public final byte getType() {
-    	return type;
-    }
+	public void setType(byte type) {
+		this.type = type;
+	}
 
-    /**
-     * @param type
-     *            the type to set
-     */
-    public final void setType(byte type) {
-    	this.type = type;
-    }
+	public byte getPriority() {
+		return priority;
+	}
 
-    /**
-     * @return the priority
-     */
-    public final byte getPriority() {
-    	return priority;
-    }
+	public void setPriority(byte priority) {
+		this.priority = priority;
+	}
 
-    /**
-     * @param priority
-     *            the priority to set
-     */
-    public final void setPriority(byte priority) {
-    	this.priority = priority;
-    }
+	public Map<String, Object> getAttachment() {
+		return attachment;
+	}
 
-    /**
-     * @return the attachment
-     */
-    public final Map<String, Object> getAttachment() {
-    	return attachment;
-    }
+	public void setAttachment(Map<String, Object> attachment) {
+		this.attachment = attachment;
+	}
 
-    /**
-     * @param attachment
-     *            the attachment to set
-     */
-    public final void setAttachment(Map<String, Object> attachment) {
-    	this.attachment = attachment;
-    }
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
-    /*
+
+
+	/*
      * (non-Javadoc)
      * 
      * @see java.lang.Object#toString()

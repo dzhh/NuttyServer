@@ -12,6 +12,7 @@ public class Body implements Serializable  {
 	private String userName;
 	
     private String password;
+    
     public String getUserName() {
         return userName;
     }
@@ -36,5 +37,15 @@ public class Body implements Serializable  {
 
 	public void setLoginResult(byte loginResult) {
 		this.loginResult = loginResult;
+	}
+	
+	private String msgBody;
+
+	public String getMsgBody() {
+		return msgBody;
+	}
+
+	public void setMsgBody(String msgBody) {
+		this.msgBody = msgBody;
 	}
 }
