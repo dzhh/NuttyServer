@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_package = "com.fly.netty.codec.protobuf";
+option java_outer_classname = "MsgServer2Client";
+
+enum MsgType{
+  zero = 0;
+  open = 1;//借充电宝
+  lock = 2;//还充电宝  
+  heat = 3;//心跳
+  qita = 4;//其他类型
+}
+
+message Msg {
+  MsgType msgType = 1; //消息类型
+  string sessionID = 2; //会话ID
+  string msgInfo = 3;//消息描述
+  string c_id = 4;//机舱编号
+}

@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option java_package = "com.fly.netty.codec.protobuf";
-option java_outer_classname = "MsgReqProtobuf";
+option java_outer_classname = "MsgClient2Server";
 
 message Cabin {
   string c_id = 1;//充电舱编号
@@ -20,15 +20,16 @@ message Machine {
 }
 
 enum MsgType{
-  open = 0;//借充电宝
-  lock = 1;//还充电宝
-  init = 2;//初始化信息
-  error = 3;//主板自检故障
-  update = 4;//更新信息
-  heat = 5;//心跳
+  zero = 0;
+  open = 1;//借充电宝
+  lock = 2;//还充电宝
+  init = 3;//初始化信息
+  error = 4;//主板自检故障
+  update = 5;//更新信息
+  heat = 6;//心跳
 }
 
-message MsgReq {
+message Msg {
   MsgType msgType = 1; //消息类型
   string sessionID = 2; //会话ID
   Machine machine = 3;//机器

@@ -1,6 +1,6 @@
 package com.fly.netty.server.channel;
 
-import com.fly.netty.codec.protobuf.MsgReqProtobuf;
+import com.fly.netty.codec.protobuf.MsgClient2Server;
 import com.fly.netty.server.handler.HeartBeatRespHandler;
 import com.fly.netty.server.handler.LoginAuthRespHandler;
 import com.fly.netty.server.handler.StringNettyServerHandler;
@@ -45,7 +45,7 @@ public class ServerTCPChannelInitializer <C extends Channel> extends ChannelInit
 		// 半包的处理
 		ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
 		// 需要解码的目标类
-		ch.pipeline().addLast(new ProtobufDecoder(MsgReqProtobuf.MsgReq.getDefaultInstance()));
+		ch.pipeline().addLast(new ProtobufDecoder(MsgClient2Server.Msg.getDefaultInstance()));
 		ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
 		ch.pipeline().addLast(new ProtobufEncoder());
 

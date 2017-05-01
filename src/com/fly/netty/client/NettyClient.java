@@ -17,8 +17,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.fly.netty.client.channel.ClientTCPChannelInitializer;
-import com.fly.netty.codec.protobuf.MsgReqProtobuf;
-import com.fly.netty.codec.protobuf.MsgReqProtobuf.MsgType;
+import com.fly.netty.codec.protobuf.MsgClient2Server;
 import com.fly.netty.common.Body;
 import com.fly.netty.common.Header;
 import com.fly.netty.common.MessageType;
@@ -62,13 +61,13 @@ public class NettyClient {
 	 * @param nettyClient
 	 */
 	public void sendMsg(NettyClient nettyClient) {
-		MsgReqProtobuf.MsgReq msgReq = subReq();
+		MsgClient2Server.Msg msgReq = subReq();
 		System.out.println(msgReq);
 	  	nettyClient.socketChannel.writeAndFlush(msgReq);
 	}
 	
-    private MsgReqProtobuf.MsgReq subReq() {
-    	MsgReqProtobuf.Machine.Builder machineBuilder = MsgReqProtobuf.Machine.newBuilder();
+    private MsgClient2Server.Msg subReq() {
+    	MsgClient2Server.Machine.Builder machineBuilder = MsgClient2Server.Machine.newBuilder();
     	for(int i=0; i<6; i++) {
     		machineBuilder.addCabin(getCabinBuilder(i));
     	}
@@ -78,15 +77,15 @@ public class NettyClient {
     	machineBuilder.setWifi("wife");
     	machineBuilder.setMobile("4g");
     	
-    	MsgReqProtobuf.MsgReq.Builder msgReqbuilder = MsgReqProtobuf.MsgReq.newBuilder();
+    	MsgClient2Server.Msg.Builder msgReqbuilder = MsgClient2Server.Msg.newBuilder();
     	msgReqbuilder.setSessionID("001");
-    	msgReqbuilder.setMsgType(MsgType.init);
+    	msgReqbuilder.setMsgType(MsgClient2Server.MsgType.init);
     	msgReqbuilder.setMachine(machineBuilder);
 		return msgReqbuilder.build();
     }
     
-    private MsgReqProtobuf.Cabin.Builder getCabinBuilder(int i) {
-    	MsgReqProtobuf.Cabin.Builder cabinBuilder = MsgReqProtobuf.Cabin.newBuilder();
+    private MsgClient2Server.Cabin.Builder getCabinBuilder(int i) {
+    	MsgClient2Server.Cabin.Builder cabinBuilder = MsgClient2Server.Cabin.newBuilder();
     	String a = "_" + i;
     	cabinBuilder.setCId("a" + a);
     	cabinBuilder.setPId("p" + a);

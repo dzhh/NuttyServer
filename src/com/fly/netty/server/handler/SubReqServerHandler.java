@@ -1,10 +1,7 @@
 package com.fly.netty.server.handler;
 
-import com.fly.netty.codec.protobuf.MsgReqProtobuf;
-import com.fly.netty.codec.protobuf.MsgReqProtobuf.MsgReq;
-import com.fly.netty.codec.protobuf.MsgRespProtobuf;
-import com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgResp;
-import com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType;
+import com.fly.netty.codec.protobuf.MsgClient2Server;
+import com.fly.netty.codec.protobuf.MsgServer2Client;
 import com.fly.netty.server.MsgReqMap;
 import com.fly.netty.server.NettyChannelMap;
 
@@ -29,22 +26,23 @@ public class SubReqServerHandler extends SimpleChannelInboundHandler {
 	 * 接受请求 处理请求
 	 */
 	protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-		MsgReq msgReq = (MsgReqProtobuf.MsgReq) msg;
+		System.out.println(msg);
+		MsgClient2Server.Msg msgReq = (MsgClient2Server.Msg) msg;
 		// 消息类型
-		com.fly.netty.codec.protobuf.MsgReqProtobuf.MsgType msgType =  msgReq.getMsgType();
+		MsgClient2Server.MsgType msgType =  msgReq.getMsgType();
 		
 		// 初始化 init
-		if(msgType.equals(MsgReqProtobuf.MsgType.init)) {
+		if(msgType.equals(MsgClient2Server.MsgType.init)) {
 			initMsg(ctx, msgReq);
-		} else if(msgType.equals(MsgReqProtobuf.MsgType.open)) {
+		} else if(msgType.equals(MsgClient2Server.MsgType.open)) {
 			
-		} else if(msgType.equals(MsgReqProtobuf.MsgType.lock)) {
+		} else if(msgType.equals(MsgClient2Server.MsgType.lock)) {
 			
-		} else if(msgType.equals(MsgReqProtobuf.MsgType.heat)) {
+		} else if(msgType.equals(MsgClient2Server.MsgType.heat)) {
 			
-		} else if(msgType.equals(MsgReqProtobuf.MsgType.update)) {
+		} else if(msgType.equals(MsgClient2Server.MsgType.update)) {
 			
-		} else if(msgType.equals(MsgReqProtobuf.MsgType.error)) {
+		} else if(msgType.equals(MsgClient2Server.MsgType.error)) {
 			
 		}
 		
@@ -58,32 +56,19 @@ public class SubReqServerHandler extends SimpleChannelInboundHandler {
 	 * @param msgReq
 	 * @throws Exception
 	 */
-	private void initMsg(ChannelHandlerContext ctx, MsgReq msgReq) throws Exception {
+	private void initMsg(ChannelHandlerContext ctx, MsgClient2Server.Msg msg) throws Exception {
 		//存储连接  存储机器状态
-		NettyChannelMap.add(msgReq.getSessionID(), (SocketChannel)ctx.channel());
-		MsgReqMap.add(msgReq.getSessionID(), msgReq);
+		NettyChannelMap.add(msg.getSessionID(), (SocketChannel)ctx.channel());
+		MsgReqMap.add(msg.getSessionID(), msg);
 		
 		//返回 ok
-		MsgRespProtobuf.MsgResp.Builder builder = MsgRespProtobuf.MsgResp.newBuilder();
-		builder.setMsgType(MsgType.qita);
+		MsgServer2Client.Msg.Builder builder = MsgServer2Client.Msg.newBuilder();
+		builder.setMsgType(MsgServer2Client.MsgType.qita);
 		builder.setMsgInfo("ok");
-		MsgResp msgResp = builder.build();
+		MsgServer2Client.Msg msgResp = builder.build();
 		ctx.writeAndFlush(msgResp);
 	}
 	
-	/**
-	 * 构建返回值
-	 * @param sessionID
-	 * @return
-	 */
-	private MsgRespProtobuf.MsgResp resp(String sessionID) {
-		MsgRespProtobuf.MsgResp.Builder builder = MsgRespProtobuf.MsgResp.newBuilder();
-		builder.setMsgType(MsgType.qita);
-		builder.setMsgInfo("resp " + sessionID);
-		
-		return builder.build();
-	}
-
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		cause.printStackTrace();

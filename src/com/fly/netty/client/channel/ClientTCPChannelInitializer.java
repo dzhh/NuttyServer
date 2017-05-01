@@ -4,7 +4,8 @@ import com.fly.netty.client.handle.HeartBeatReqHandler;
 import com.fly.netty.client.handle.LoginAuthReqHandler;
 import com.fly.netty.client.handle.NettyClientHandler;
 import com.fly.netty.client.handle.SubReqClientHandler;
-import com.fly.netty.codec.protobuf.MsgRespProtobuf;
+import com.fly.netty.codec.protobuf.MsgClient2Server;
+import com.fly.netty.codec.protobuf.MsgServer2Client;
 import com.fly.netty.server.handler.StringNettyServerHandler;
 
 import io.netty.channel.Channel;
@@ -43,7 +44,7 @@ public class ClientTCPChannelInitializer <C extends Channel> extends ChannelInit
 //	    pipeline.addLast(new NettyClientHandler());
 		
 	    pipeline.addLast(new ProtobufVarint32FrameDecoder());
-	    pipeline.addLast(new ProtobufDecoder(MsgRespProtobuf.MsgResp.getDefaultInstance()));
+	    pipeline.addLast(new ProtobufDecoder(MsgServer2Client.Msg.getDefaultInstance()));
 	    pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
 	    pipeline.addLast(new ProtobufEncoder());
 	    pipeline.addLast(new SubReqClientHandler());
