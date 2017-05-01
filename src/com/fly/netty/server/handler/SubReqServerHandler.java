@@ -2,6 +2,7 @@ package com.fly.netty.server.handler;
 
 import com.fly.netty.codec.protobuf.MsgReqProtobuf;
 import com.fly.netty.codec.protobuf.MsgRespProtobuf;
+import com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType;
 import com.fly.netty.server.NettyChannelMap;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -34,7 +35,8 @@ public class SubReqServerHandler extends SimpleChannelInboundHandler {
 	 */
 	private MsgRespProtobuf.MsgResp resp(String sessionID) {
 		MsgRespProtobuf.MsgResp.Builder builder = MsgRespProtobuf.MsgResp.newBuilder();
-		builder.setMsgType("resp " + sessionID);
+		builder.setMsgType(MsgType.qita);
+		builder.setMsgInfo("resp " + sessionID);
 		
 		return builder.build();
 	}

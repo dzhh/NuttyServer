@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.fly.netty.client.channel.ClientTCPChannelInitializer;
 import com.fly.netty.codec.protobuf.MsgReqProtobuf;
-import com.fly.netty.codec.protobuf.MsgReqProtobuf.NetType;
+import com.fly.netty.codec.protobuf.MsgReqProtobuf.MsgType;
 import com.fly.netty.common.Body;
 import com.fly.netty.common.Header;
 import com.fly.netty.common.MessageType;
@@ -68,25 +68,33 @@ public class NettyClient {
 	}
 	
     private MsgReqProtobuf.MsgReq subReq() {
-    	MsgReqProtobuf.Cabin.Builder cabinBuilder = MsgReqProtobuf.Cabin.newBuilder();
-    	cabinBuilder.setCId("a");
-    	cabinBuilder.setPId("p");
-    	cabinBuilder.setPLock(true);
-    	cabinBuilder.setPCount(10);
-    	cabinBuilder.setPQuantity(60);
-    	
     	MsgReqProtobuf.Machine.Builder machineBuilder = MsgReqProtobuf.Machine.newBuilder();
-    	machineBuilder.setCabin(cabinBuilder);
+    	for(int i=0; i<6; i++) {
+    		machineBuilder.addCabin(getCabinBuilder(i));
+    	}
+    	
+    	
     	machineBuilder.setMId("001");
-    	machineBuilder.setNetType(NetType.mobile);
+    	machineBuilder.setWifi("wife");
+    	machineBuilder.setMobile("4g");
     	
     	MsgReqProtobuf.MsgReq.Builder msgReqbuilder = MsgReqProtobuf.MsgReq.newBuilder();
     	msgReqbuilder.setSessionID("001");
-    	msgReqbuilder.setMsgType("msqReq");
+    	msgReqbuilder.setMsgType(MsgType.init);
     	msgReqbuilder.setMachine(machineBuilder);
 		return msgReqbuilder.build();
     }
     
+    private MsgReqProtobuf.Cabin.Builder getCabinBuilder(int i) {
+    	MsgReqProtobuf.Cabin.Builder cabinBuilder = MsgReqProtobuf.Cabin.newBuilder();
+    	String a = "_" + i;
+    	cabinBuilder.setCId("a" + a);
+    	cabinBuilder.setPId("p" + a);
+    	cabinBuilder.setPLock(true);
+    	cabinBuilder.setPCount(10);
+    	cabinBuilder.setPQuantity(60);
+    	return cabinBuilder;
+    }
     
 
     private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);

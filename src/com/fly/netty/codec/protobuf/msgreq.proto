@@ -11,19 +11,26 @@ message Cabin {
   int32 p_quantity = 5;//电量
 }
 
-enum NetType{
-  wifi = 0;
-  mobile = 1;
-}
 
 message Machine {
   string m_id = 1;//机器码
-  NetType netType = 2;//网络模式
-  Cabin cabin = 3;//充电舱
+  string wifi = 2;
+  string mobile = 3;//设备网络
+  repeated Cabin cabin = 4;//多个充电舱
+}
+
+enum MsgType{
+  open = 0;//借充电宝
+  lock = 1;//还充电宝
+  init = 2;//初始化信息
+  error = 3;//主板自检故障
+  update = 4;//更新信息
+  heat = 5;//心跳
 }
 
 message MsgReq {
-  string msgType = 1; //消息类型
+  MsgType msgType = 1; //消息类型
   string sessionID = 2; //会话ID
-  Machine machine = 3;
+  Machine machine = 3;//机器
+  string msgInfo = 4;//消息描述
 }

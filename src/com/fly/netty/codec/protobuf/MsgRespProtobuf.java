@@ -14,6 +14,154 @@ public final class MsgRespProtobuf {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
+  /**
+   * Protobuf enum {@code MsgType}
+   */
+  public enum MsgType
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <pre>
+     *借充电宝
+     * </pre>
+     *
+     * <code>open = 0;</code>
+     */
+    open(0),
+    /**
+     * <pre>
+     *还充电宝  
+     * </pre>
+     *
+     * <code>lock = 1;</code>
+     */
+    lock(1),
+    /**
+     * <pre>
+     *心跳
+     * </pre>
+     *
+     * <code>heat = 2;</code>
+     */
+    heat(2),
+    /**
+     * <pre>
+     *其他类型
+     * </pre>
+     *
+     * <code>qita = 3;</code>
+     */
+    qita(3),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <pre>
+     *借充电宝
+     * </pre>
+     *
+     * <code>open = 0;</code>
+     */
+    public static final int open_VALUE = 0;
+    /**
+     * <pre>
+     *还充电宝  
+     * </pre>
+     *
+     * <code>lock = 1;</code>
+     */
+    public static final int lock_VALUE = 1;
+    /**
+     * <pre>
+     *心跳
+     * </pre>
+     *
+     * <code>heat = 2;</code>
+     */
+    public static final int heat_VALUE = 2;
+    /**
+     * <pre>
+     *其他类型
+     * </pre>
+     *
+     * <code>qita = 3;</code>
+     */
+    public static final int qita_VALUE = 3;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static MsgType valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static MsgType forNumber(int value) {
+      switch (value) {
+        case 0: return open;
+        case 1: return lock;
+        case 2: return heat;
+        case 3: return qita;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<MsgType>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        MsgType> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<MsgType>() {
+            public MsgType findValueByNumber(int number) {
+              return MsgType.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return com.fly.netty.codec.protobuf.MsgRespProtobuf.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final MsgType[] VALUES = values();
+
+    public static MsgType valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private MsgType(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:MsgType)
+  }
+
   public interface MsgRespOrBuilder extends
       // @@protoc_insertion_point(interface_extends:MsgResp)
       com.google.protobuf.MessageOrBuilder {
@@ -23,18 +171,17 @@ public final class MsgRespProtobuf {
      *消息类型
      * </pre>
      *
-     * <code>string msgType = 1;</code>
+     * <code>.MsgType msgType = 1;</code>
      */
-    java.lang.String getMsgType();
+    int getMsgTypeValue();
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>string msgType = 1;</code>
+     * <code>.MsgType msgType = 1;</code>
      */
-    com.google.protobuf.ByteString
-        getMsgTypeBytes();
+    com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType getMsgType();
 
     /**
      * <pre>
@@ -53,6 +200,24 @@ public final class MsgRespProtobuf {
      */
     com.google.protobuf.ByteString
         getSessionIDBytes();
+
+    /**
+     * <pre>
+     *消息描述
+     * </pre>
+     *
+     * <code>string msgInfo = 3;</code>
+     */
+    java.lang.String getMsgInfo();
+    /**
+     * <pre>
+     *消息描述
+     * </pre>
+     *
+     * <code>string msgInfo = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getMsgInfoBytes();
   }
   /**
    * Protobuf type {@code MsgResp}
@@ -66,8 +231,9 @@ public final class MsgRespProtobuf {
       super(builder);
     }
     private MsgResp() {
-      msgType_ = "";
+      msgType_ = 0;
       sessionID_ = "";
+      msgInfo_ = "";
     }
 
     @java.lang.Override
@@ -95,16 +261,22 @@ public final class MsgRespProtobuf {
               }
               break;
             }
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
+              int rawValue = input.readEnum();
 
-              msgType_ = s;
+              msgType_ = rawValue;
               break;
             }
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
               sessionID_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              msgInfo_ = s;
               break;
             }
           }
@@ -131,45 +303,27 @@ public final class MsgRespProtobuf {
     }
 
     public static final int MSGTYPE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object msgType_;
+    private int msgType_;
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>string msgType = 1;</code>
+     * <code>.MsgType msgType = 1;</code>
      */
-    public java.lang.String getMsgType() {
-      java.lang.Object ref = msgType_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        msgType_ = s;
-        return s;
-      }
+    public int getMsgTypeValue() {
+      return msgType_;
     }
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>string msgType = 1;</code>
+     * <code>.MsgType msgType = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getMsgTypeBytes() {
-      java.lang.Object ref = msgType_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        msgType_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType getMsgType() {
+      com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType result = com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType.valueOf(msgType_);
+      return result == null ? com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType.UNRECOGNIZED : result;
     }
 
     public static final int SESSIONID_FIELD_NUMBER = 2;
@@ -214,6 +368,48 @@ public final class MsgRespProtobuf {
       }
     }
 
+    public static final int MSGINFO_FIELD_NUMBER = 3;
+    private volatile java.lang.Object msgInfo_;
+    /**
+     * <pre>
+     *消息描述
+     * </pre>
+     *
+     * <code>string msgInfo = 3;</code>
+     */
+    public java.lang.String getMsgInfo() {
+      java.lang.Object ref = msgInfo_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        msgInfo_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *消息描述
+     * </pre>
+     *
+     * <code>string msgInfo = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMsgInfoBytes() {
+      java.lang.Object ref = msgInfo_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        msgInfo_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -226,11 +422,14 @@ public final class MsgRespProtobuf {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getMsgTypeBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, msgType_);
+      if (msgType_ != com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType.open.getNumber()) {
+        output.writeEnum(1, msgType_);
       }
       if (!getSessionIDBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, sessionID_);
+      }
+      if (!getMsgInfoBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, msgInfo_);
       }
     }
 
@@ -239,11 +438,15 @@ public final class MsgRespProtobuf {
       if (size != -1) return size;
 
       size = 0;
-      if (!getMsgTypeBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, msgType_);
+      if (msgType_ != com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType.open.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, msgType_);
       }
       if (!getSessionIDBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, sessionID_);
+      }
+      if (!getMsgInfoBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, msgInfo_);
       }
       memoizedSize = size;
       return size;
@@ -261,10 +464,11 @@ public final class MsgRespProtobuf {
       com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgResp other = (com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgResp) obj;
 
       boolean result = true;
-      result = result && getMsgType()
-          .equals(other.getMsgType());
+      result = result && msgType_ == other.msgType_;
       result = result && getSessionID()
           .equals(other.getSessionID());
+      result = result && getMsgInfo()
+          .equals(other.getMsgInfo());
       return result;
     }
 
@@ -276,9 +480,11 @@ public final class MsgRespProtobuf {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + MSGTYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getMsgType().hashCode();
+      hash = (53 * hash) + msgType_;
       hash = (37 * hash) + SESSIONID_FIELD_NUMBER;
       hash = (53 * hash) + getSessionID().hashCode();
+      hash = (37 * hash) + MSGINFO_FIELD_NUMBER;
+      hash = (53 * hash) + getMsgInfo().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -397,9 +603,11 @@ public final class MsgRespProtobuf {
       }
       public Builder clear() {
         super.clear();
-        msgType_ = "";
+        msgType_ = 0;
 
         sessionID_ = "";
+
+        msgInfo_ = "";
 
         return this;
       }
@@ -425,6 +633,7 @@ public final class MsgRespProtobuf {
         com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgResp result = new com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgResp(this);
         result.msgType_ = msgType_;
         result.sessionID_ = sessionID_;
+        result.msgInfo_ = msgInfo_;
         onBuilt();
         return result;
       }
@@ -466,12 +675,15 @@ public final class MsgRespProtobuf {
 
       public Builder mergeFrom(com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgResp other) {
         if (other == com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgResp.getDefaultInstance()) return this;
-        if (!other.getMsgType().isEmpty()) {
-          msgType_ = other.msgType_;
-          onChanged();
+        if (other.msgType_ != 0) {
+          setMsgTypeValue(other.getMsgTypeValue());
         }
         if (!other.getSessionID().isEmpty()) {
           sessionID_ = other.sessionID_;
+          onChanged();
+        }
+        if (!other.getMsgInfo().isEmpty()) {
+          msgInfo_ = other.msgInfo_;
           onChanged();
         }
         onChanged();
@@ -500,59 +712,25 @@ public final class MsgRespProtobuf {
         return this;
       }
 
-      private java.lang.Object msgType_ = "";
+      private int msgType_ = 0;
       /**
        * <pre>
        *消息类型
        * </pre>
        *
-       * <code>string msgType = 1;</code>
+       * <code>.MsgType msgType = 1;</code>
        */
-      public java.lang.String getMsgType() {
-        java.lang.Object ref = msgType_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          msgType_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public int getMsgTypeValue() {
+        return msgType_;
       }
       /**
        * <pre>
        *消息类型
        * </pre>
        *
-       * <code>string msgType = 1;</code>
+       * <code>.MsgType msgType = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getMsgTypeBytes() {
-        java.lang.Object ref = msgType_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          msgType_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>string msgType = 1;</code>
-       */
-      public Builder setMsgType(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setMsgTypeValue(int value) {
         msgType_ = value;
         onChanged();
         return this;
@@ -562,29 +740,38 @@ public final class MsgRespProtobuf {
        *消息类型
        * </pre>
        *
-       * <code>string msgType = 1;</code>
+       * <code>.MsgType msgType = 1;</code>
+       */
+      public com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType getMsgType() {
+        com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType result = com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType.valueOf(msgType_);
+        return result == null ? com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.MsgType msgType = 1;</code>
+       */
+      public Builder setMsgType(com.fly.netty.codec.protobuf.MsgRespProtobuf.MsgType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        msgType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.MsgType msgType = 1;</code>
        */
       public Builder clearMsgType() {
         
-        msgType_ = getDefaultInstance().getMsgType();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>string msgType = 1;</code>
-       */
-      public Builder setMsgTypeBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        msgType_ = value;
+        msgType_ = 0;
         onChanged();
         return this;
       }
@@ -677,6 +864,95 @@ public final class MsgRespProtobuf {
         onChanged();
         return this;
       }
+
+      private java.lang.Object msgInfo_ = "";
+      /**
+       * <pre>
+       *消息描述
+       * </pre>
+       *
+       * <code>string msgInfo = 3;</code>
+       */
+      public java.lang.String getMsgInfo() {
+        java.lang.Object ref = msgInfo_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          msgInfo_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息描述
+       * </pre>
+       *
+       * <code>string msgInfo = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getMsgInfoBytes() {
+        java.lang.Object ref = msgInfo_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          msgInfo_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息描述
+       * </pre>
+       *
+       * <code>string msgInfo = 3;</code>
+       */
+      public Builder setMsgInfo(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        msgInfo_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息描述
+       * </pre>
+       *
+       * <code>string msgInfo = 3;</code>
+       */
+      public Builder clearMsgInfo() {
+        
+        msgInfo_ = getDefaultInstance().getMsgInfo();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息描述
+       * </pre>
+       *
+       * <code>string msgInfo = 3;</code>
+       */
+      public Builder setMsgInfoBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        msgInfo_ = value;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -740,9 +1016,11 @@ public final class MsgRespProtobuf {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rmsgresp.proto\"-\n\007MsgResp\022\017\n\007msgType\030\001 " +
-      "\001(\t\022\021\n\tsessionID\030\002 \001(\tB/\n\034com.fly.netty." +
-      "codec.protobufB\017MsgRespProtobufb\006proto3"
+      "\n\rmsgresp.proto\"H\n\007MsgResp\022\031\n\007msgType\030\001 " +
+      "\001(\0162\010.MsgType\022\021\n\tsessionID\030\002 \001(\t\022\017\n\007msgI" +
+      "nfo\030\003 \001(\t*1\n\007MsgType\022\010\n\004open\020\000\022\010\n\004lock\020\001" +
+      "\022\010\n\004heat\020\002\022\010\n\004qita\020\003B/\n\034com.fly.netty.co" +
+      "dec.protobufB\017MsgRespProtobufb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -761,7 +1039,7 @@ public final class MsgRespProtobuf {
     internal_static_MsgResp_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MsgResp_descriptor,
-        new java.lang.String[] { "MsgType", "SessionID", });
+        new java.lang.String[] { "MsgType", "SessionID", "MsgInfo", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
