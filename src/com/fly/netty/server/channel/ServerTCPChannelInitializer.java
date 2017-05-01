@@ -42,24 +42,14 @@ public class ServerTCPChannelInitializer <C extends Channel> extends ChannelInit
 	 // 继承netty提供的通用半包处理器 LengthFieldBasedFrameDecoder
 	 // 继承ByteToMessageDecoder类，自己处理半包
 
-	 // 半包的处理
-	 ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
-	 // 需要解码的目标类
-	 ch.pipeline().addLast(new ProtobufDecoder(MsgReqProtobuf.MsgReq.getDefaultInstance()));
+		// 半包的处理
+		ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
+		// 需要解码的目标类
+		ch.pipeline().addLast(new ProtobufDecoder(MsgReqProtobuf.MsgReq.getDefaultInstance()));
+		ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
+		ch.pipeline().addLast(new ProtobufEncoder());
 
-	 ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
-
-	 ch.pipeline().addLast(new ProtobufEncoder());
-
-	 ch.pipeline().addLast(new SubReqServerHandler());
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
+		ch.pipeline().addLast(new SubReqServerHandler());
 	}
 
 }

@@ -47,6 +47,12 @@ public class NettyServer {
         }
     }
 	
+	/**
+	 * 初始化nutty服务器
+	 * @param ip
+	 * @param port
+	 * @throws Exception
+	 */
     public void bind(String ip, int port) throws Exception {
 		// 配置服务端的NIO线程组  NioEventLoopGroup是个线程组
     	// 一个用于服务器端接受客户端的连接
