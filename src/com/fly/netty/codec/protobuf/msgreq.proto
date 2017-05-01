@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_package = "com.fly.netty.codec.protobuf";
+option java_outer_classname = "MsgReqProtobuf";
+
+message Cabin {
+  string c_id = 1;//充电舱编号
+  string p_id = 2;//充电宝RFID
+  bool p_lock = 3;//充电宝锁状态
+  int32 p_count = 4;//充电宝循环次数
+  int32 p_quantity = 5;//电量
+}
+
+enum NetType{
+  wifi = 0;
+  mobile = 1;
+}
+
+message Machine {
+  string m_id = 1;//机器码
+  NetType netType = 2;//网络模式
+  Cabin cabin = 3;//充电舱
+}
+
+message MsgReq {
+  string msgType = 1; //消息类型
+  string sessionID = 2; //会话ID
+  Machine machine = 3;
+}

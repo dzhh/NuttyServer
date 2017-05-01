@@ -10,11 +10,15 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.fly.netty.client.channel.ClientTCPChannelInitializer;
+import com.fly.netty.codec.protobuf.MsgReqProtobuf;
+import com.fly.netty.codec.protobuf.MsgReqProtobuf.NetType;
 import com.fly.netty.common.Body;
 import com.fly.netty.common.Header;
 import com.fly.netty.common.MessageType;
@@ -22,19 +26,94 @@ import com.fly.netty.common.NettyConstant;
 import com.fly.netty.common.NettyMessage;
 import com.fly.netty.util.JsonUtil;
 
-
+/**
+ * 
+ * @author fly
+ *
+ */
 public class NettyClient {
 	
 	
 	public static void main(String[]args) {
-//      NettyClientBootstrap bootstrap=new NettyClientBootstrap(9999,"localhost");
 	  	NettyClient nettyClient = new NettyClient();
-//	  	nettyClient.connectServer(nettyClient, 10080, "139.196.172.139");
 	  	nettyClient.connectServer(nettyClient, 10080, "127.0.0.1");
-//	  	nettyClient.heartBeat(nettyClient);
+	  	
     }
 	
-	public void heartBeat(NettyClient nettyClient) {
+	
+	/**
+	 * 连接服务器
+	 * @param nettyClient
+	 * @param port
+	 * @param ip
+	 */
+	public void connectServer(NettyClient nettyClient, int port, String ip) {
+		try {
+			nettyClient.connect(port, ip);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		sendMsg(nettyClient);
+	}
+	
+	/**
+	 * 发送消息
+	 * @param nettyClient
+	 */
+	public void sendMsg(NettyClient nettyClient) {
+		MsgReqProtobuf.MsgReq msgReq = subReq();
+		System.out.println(msgReq);
+	  	nettyClient.socketChannel.writeAndFlush(msgReq);
+	}
+	
+    private MsgReqProtobuf.MsgReq subReq() {
+    	MsgReqProtobuf.Cabin.Builder cabinBuilder = MsgReqProtobuf.Cabin.newBuilder();
+    	cabinBuilder.setCId("a");
+    	cabinBuilder.setPId("p");
+    	cabinBuilder.setPLock(true);
+    	cabinBuilder.setPCount(10);
+    	cabinBuilder.setPQuantity(60);
+    	
+    	MsgReqProtobuf.Machine.Builder machineBuilder = MsgReqProtobuf.Machine.newBuilder();
+    	machineBuilder.setCabin(cabinBuilder);
+    	machineBuilder.setMId("001");
+    	machineBuilder.setNetType(NetType.mobile);
+    	
+    	MsgReqProtobuf.MsgReq.Builder msgReqbuilder = MsgReqProtobuf.MsgReq.newBuilder();
+    	msgReqbuilder.setSessionID("001");
+    	msgReqbuilder.setMsgType("msqReq");
+    	msgReqbuilder.setMachine(machineBuilder);
+		return msgReqbuilder.build();
+    }
+    
+    
+
+    private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+    EventLoopGroup group = new NioEventLoopGroup();
+    private SocketChannel socketChannel;
+
+
+    public void connect(int port, String host) throws Exception {
+		// 配置客户端NIO线程组
+	    Bootstrap bootstrap = new Bootstrap();
+        bootstrap.group(group);
+        bootstrap.channel(NioSocketChannel.class);
+        bootstrap.option(ChannelOption.SO_KEEPALIVE,true);
+        bootstrap.remoteAddress(host,port);
+        bootstrap.handler(new ClientTCPChannelInitializer<SocketChannel>());
+        
+      ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port),
+			    new InetSocketAddress("0.0.0.0", NettyConstant.LOCAL_PORT)).sync();
+        if (future.isSuccess()) {
+            socketChannel = (SocketChannel)future.channel();
+            System.out.println("connect server  成功---------");
+        }
+	        
+    }
+
+    
+    public void heartBeat(NettyClient nettyClient) {
 		int retry = 0;
 		while (true){
 	  		try {
@@ -61,54 +140,5 @@ public class NettyClient {
 	  		}
 	  	}
 	}
-	
-	public void connectServer(NettyClient nettyClient, int port, String ip) {
-		try {
-//			nettyClient.connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
-//			nettyClient.connect(10080, "139.196.172.139");
-			nettyClient.connect(port, ip);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		NettyMessage nettyMessageResp = new NettyMessage();
-    	Header header = new Header();
-    	header.setType(MessageType.LOGIN_REQ.value());
-    	header.setSessionID("001");
-    	nettyMessageResp.setHeader(header);
-		Body body = new Body();
-	  	body.setPassword("fly");
-	  	body.setUserName("fly");
-	  	nettyMessageResp.setBody(body);
-	  	String json = JsonUtil.beanToJson(nettyMessageResp);
-	  	nettyClient.socketChannel.writeAndFlush(json);
-//	  	nettyClient.socketChannel.writeAndFlush(loginMsg);
-	}
-
-    private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-    EventLoopGroup group = new NioEventLoopGroup();
-    private SocketChannel socketChannel;
-
-
-    public void connect(int port, String host) throws Exception {
-		// 配置客户端NIO线程组
-	    Bootstrap bootstrap = new Bootstrap();
-        bootstrap.group(group);
-        bootstrap.channel(NioSocketChannel.class);
-        bootstrap.option(ChannelOption.SO_KEEPALIVE,true);
-        bootstrap.remoteAddress(host,port);
-        bootstrap.handler(new ClientTCPChannelInitializer<SocketChannel>());
-        
-//        ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port),
-//			    new InetSocketAddress(NettyConstant.LOCALIP, NettyConstant.LOCAL_PORT)).sync();
-      ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port),
-			    new InetSocketAddress("0.0.0.0", NettyConstant.LOCAL_PORT)).sync();
-        if (future.isSuccess()) {
-            socketChannel = (SocketChannel)future.channel();
-            System.out.println("connect server  成功---------");
-        }
-	        
-    }
-
 
 }

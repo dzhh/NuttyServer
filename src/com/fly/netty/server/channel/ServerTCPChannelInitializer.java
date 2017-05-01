@@ -1,12 +1,18 @@
 package com.fly.netty.server.channel;
 
+import com.fly.netty.codec.protobuf.MsgReqProtobuf;
 import com.fly.netty.server.handler.HeartBeatRespHandler;
 import com.fly.netty.server.handler.LoginAuthRespHandler;
 import com.fly.netty.server.handler.StringNettyServerHandler;
+import com.fly.netty.server.handler.SubReqServerHandler;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
@@ -23,12 +29,37 @@ public class ServerTCPChannelInitializer <C extends Channel> extends ChannelInit
 //		p.addLast(new ObjectEncoder());
 //        p.addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
 		
-		pipeline.addLast("decoder", new StringDecoder());
-		pipeline.addLast("encoder", new StringEncoder());
+//		pipeline.addLast("decoder", new StringDecoder());
+//		pipeline.addLast("encoder", new StringEncoder());
+//		
+//		pipeline.addLast(new LoginAuthRespHandler());
+//		pipeline.addLast(new HeartBeatRespHandler());
+//		pipeline.addLast(new StringNettyServerHandler());
 		
-		pipeline.addLast(new LoginAuthRespHandler());
-		pipeline.addLast(new HeartBeatRespHandler());
-		pipeline.addLast(new StringNettyServerHandler());
+	 // protobufDecoder仅仅负责编码，并不支持读半包，所以在之前，一定要有读半包的处理器。
+	 // 有三种方式可以选择：
+	 // 使用netty提供ProtobufVarint32FrameDecoder
+	 // 继承netty提供的通用半包处理器 LengthFieldBasedFrameDecoder
+	 // 继承ByteToMessageDecoder类，自己处理半包
+
+	 // 半包的处理
+	 ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
+	 // 需要解码的目标类
+	 ch.pipeline().addLast(new ProtobufDecoder(MsgReqProtobuf.MsgReq.getDefaultInstance()));
+
+	 ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
+
+	 ch.pipeline().addLast(new ProtobufEncoder());
+
+	 ch.pipeline().addLast(new SubReqServerHandler());
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	}
 
 }

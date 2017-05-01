@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "com.fly.netty.codec.protobuf";
+option java_outer_classname = "MsgRespProtobuf";
+
+
+message MsgResp {
+  string msgType = 1; //消息类型
+  string sessionID = 2; //会话ID
+}

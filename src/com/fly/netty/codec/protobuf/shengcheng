@@ -1,0 +1,2 @@
+protoc  --java_out="D:\workspace\git\NuttyServer\src"  msgreq.proto 
+protoc  --java_out="D:\workspace\git\NuttyServer\src"  msgresp.proto 
