@@ -1,11 +1,14 @@
 package com.fly.netty.client.channel;
 
+import javax.net.ssl.SSLEngine;
+
 import com.fly.netty.client.handle.HeartBeatReqHandler;
 import com.fly.netty.client.handle.LoginAuthReqHandler;
 import com.fly.netty.client.handle.NettyClientHandler;
 import com.fly.netty.client.handle.SubReqClientHandler;
 import com.fly.netty.codec.protobuf.MsgClient2Server;
 import com.fly.netty.codec.protobuf.MsgServer2Client;
+import com.fly.netty.server.channel.SecureChatSslContextFactory;
 import com.fly.netty.server.handler.StringNettyServerHandler;
 
 import io.netty.channel.Channel;
@@ -20,9 +23,12 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 //import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 
 public class ClientTCPChannelInitializer <C extends Channel> extends ChannelInitializer<Channel> {
+
+    private String tlsMode = "CSA";
 
 	@Override
 	protected void initChannel(Channel ch) throws Exception {
@@ -43,6 +49,17 @@ public class ClientTCPChannelInitializer <C extends Channel> extends ChannelInit
 //	    pipeline.addLast(new HeartBeatReqHandler());
 //	    pipeline.addLast(new NettyClientHandler());
 		
+		SSLEngine engine = SecureChatSslContextFactory
+			    .getClientContext(
+					    tlsMode,
+					    System.getProperty("user.dir")
+						    + "/src/com/fly/netty/ssl/cChat.jks",
+					    System.getProperty("user.dir")
+						    + "/src/com/fly/netty/ssl/cChat.jks")
+				    .createSSLEngine();
+		engine.setUseClientMode(true);
+		pipeline.addLast("ssl", new SslHandler(engine));
+
 	    pipeline.addLast(new ProtobufVarint32FrameDecoder());
 	    pipeline.addLast(new ProtobufDecoder(MsgServer2Client.Msg.getDefaultInstance()));
 	    pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());

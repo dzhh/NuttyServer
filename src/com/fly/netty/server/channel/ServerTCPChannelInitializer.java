@@ -1,5 +1,7 @@
 package com.fly.netty.server.channel;
 
+import javax.net.ssl.SSLEngine;
+
 import com.fly.netty.codec.protobuf.MsgClient2Server;
 import com.fly.netty.server.handler.HeartBeatRespHandler;
 import com.fly.netty.server.handler.LoginAuthRespHandler;
@@ -18,9 +20,11 @@ import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.ssl.SslHandler;
 
 public class ServerTCPChannelInitializer <C extends Channel> extends ChannelInitializer<Channel> {
 
+	private String tlsMode = "CSA";
 	@Override
 	protected void initChannel(Channel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
@@ -42,14 +46,23 @@ public class ServerTCPChannelInitializer <C extends Channel> extends ChannelInit
 	 // 继承netty提供的通用半包处理器 LengthFieldBasedFrameDecoder
 	 // 继承ByteToMessageDecoder类，自己处理半包
 
-		// 半包的处理
-		ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
-		// 需要解码的目标类
-		ch.pipeline().addLast(new ProtobufDecoder(MsgClient2Server.Msg.getDefaultInstance()));
-		ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
-		ch.pipeline().addLast(new ProtobufEncoder());
+		SSLEngine engine = SecureChatSslContextFactory.getServerContext(tlsMode,
+					    System.getProperty("user.dir") + "/src/com/fly/netty/ssl/sChat.jks",
+					    System.getProperty("user.dir") + "/src/com/fly/netty/ssl/sChat.jks")
+				       .createSSLEngine();
+		engine.setUseClientMode(false);
+	    engine.setNeedClientAuth(true);
+		
+	    pipeline.addLast("ssl", new SslHandler(engine));
 
-		ch.pipeline().addLast(new SubReqServerHandler());
+		// 半包的处理
+	    pipeline.addLast(new ProtobufVarint32FrameDecoder());
+		// 需要解码的目标类
+	    pipeline.addLast(new ProtobufDecoder(MsgClient2Server.Msg.getDefaultInstance()));
+	    pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
+	    pipeline.addLast(new ProtobufEncoder());
+
+	    pipeline.addLast(new SubReqServerHandler());
 	}
 
 }
