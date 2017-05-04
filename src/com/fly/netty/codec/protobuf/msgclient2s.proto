@@ -27,6 +27,8 @@ enum MsgType{
   error = 4;//主板自检故障
   update = 5;//更新信息
   heat = 6;//心跳
+  req = 7;
+  resp = 8;
 }
 
 message Msg {

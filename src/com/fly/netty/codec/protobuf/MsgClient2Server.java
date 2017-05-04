@@ -71,6 +71,14 @@ public final class MsgClient2Server {
      * <code>heat = 6;</code>
      */
     heat(6),
+    /**
+     * <code>req = 7;</code>
+     */
+    req(7),
+    /**
+     * <code>resp = 8;</code>
+     */
+    resp(8),
     UNRECOGNIZED(-1),
     ;
 
@@ -126,6 +134,14 @@ public final class MsgClient2Server {
      * <code>heat = 6;</code>
      */
     public static final int heat_VALUE = 6;
+    /**
+     * <code>req = 7;</code>
+     */
+    public static final int req_VALUE = 7;
+    /**
+     * <code>resp = 8;</code>
+     */
+    public static final int resp_VALUE = 8;
 
 
     public final int getNumber() {
@@ -153,6 +169,8 @@ public final class MsgClient2Server {
         case 4: return error;
         case 5: return update;
         case 6: return heat;
+        case 7: return req;
+        case 8: return resp;
         default: return null;
       }
     }
@@ -3625,10 +3643,11 @@ public final class MsgClient2Server {
       " \001(\t\022\025\n\005cabin\030\004 \003(\0132\006.Cabin\"_\n\003Msg\022\031\n\007ms" +
       "gType\030\001 \001(\0162\010.MsgType\022\021\n\tsessionID\030\002 \001(\t" +
       "\022\031\n\007machine\030\003 \001(\0132\010.Machine\022\017\n\007msgInfo\030\004" +
-      " \001(\t*R\n\007MsgType\022\010\n\004zero\020\000\022\010\n\004open\020\001\022\010\n\004l" +
+      " \001(\t*e\n\007MsgType\022\010\n\004zero\020\000\022\010\n\004open\020\001\022\010\n\004l" +
       "ock\020\002\022\010\n\004init\020\003\022\t\n\005error\020\004\022\n\n\006update\020\005\022\010" +
-      "\n\004heat\020\006B0\n\034com.fly.netty.codec.protobuf",
-      "B\020MsgClient2Serverb\006proto3"
+      "\n\004heat\020\006\022\007\n\003req\020\007\022\010\n\004resp\020\010B0\n\034com.fly.n",
+      "etty.codec.protobufB\020MsgClient2Serverb\006p" +
+      "roto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
