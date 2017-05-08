@@ -25,60 +25,68 @@ public final class MsgClient2Server {
     zero(0),
     /**
      * <pre>
-     *借充电宝
+     *验证机器
      * </pre>
      *
-     * <code>open = 1;</code>
+     * <code>mid = 1;</code>
      */
-    open(1),
-    /**
-     * <pre>
-     *还充电宝
-     * </pre>
-     *
-     * <code>lock = 2;</code>
-     */
-    lock(2),
+    mid(1),
     /**
      * <pre>
      *初始化信息
      * </pre>
      *
-     * <code>init = 3;</code>
+     * <code>init = 2;</code>
      */
-    init(3),
+    init(2),
+    /**
+     * <pre>
+     *借充电宝
+     * </pre>
+     *
+     * <code>open = 3;</code>
+     */
+    open(3),
+    /**
+     * <pre>
+     *还充电宝
+     * </pre>
+     *
+     * <code>lock = 4;</code>
+     */
+    lock(4),
     /**
      * <pre>
      *主板自检故障
      * </pre>
      *
-     * <code>error = 4;</code>
+     * <code>error = 5;</code>
      */
-    error(4),
+    error(5),
     /**
      * <pre>
      *更新信息
      * </pre>
      *
-     * <code>update = 5;</code>
+     * <code>update = 6;</code>
      */
-    update(5),
+    update(6),
     /**
      * <pre>
      *心跳
      * </pre>
      *
-     * <code>heat = 6;</code>
+     * <code>heat = 7;</code>
      */
-    heat(6),
+    heat(7),
     /**
-     * <code>req = 7;</code>
+     * <code>req = 8;</code>
      */
-    req(7),
+    req(8),
     /**
-     * <code>resp = 8;</code>
+     * <code>resp = 9;</code>
      */
-    resp(8),
+    resp(9),
     UNRECOGNIZED(-1),
     ;
 
@@ -88,60 +96,68 @@ public final class MsgClient2Server {
     public static final int zero_VALUE = 0;
     /**
      * <pre>
-     *借充电宝
+     *验证机器
      * </pre>
      *
-     * <code>open = 1;</code>
+     * <code>mid = 1;</code>
      */
-    public static final int open_VALUE = 1;
-    /**
-     * <pre>
-     *还充电宝
-     * </pre>
-     *
-     * <code>lock = 2;</code>
-     */
-    public static final int lock_VALUE = 2;
+    public static final int mid_VALUE = 1;
     /**
      * <pre>
      *初始化信息
      * </pre>
      *
-     * <code>init = 3;</code>
+     * <code>init = 2;</code>
      */
-    public static final int init_VALUE = 3;
+    public static final int init_VALUE = 2;
+    /**
+     * <pre>
+     *借充电宝
+     * </pre>
+     *
+     * <code>open = 3;</code>
+     */
+    public static final int open_VALUE = 3;
+    /**
+     * <pre>
+     *还充电宝
+     * </pre>
+     *
+     * <code>lock = 4;</code>
+     */
+    public static final int lock_VALUE = 4;
     /**
      * <pre>
      *主板自检故障
      * </pre>
      *
-     * <code>error = 4;</code>
+     * <code>error = 5;</code>
      */
-    public static final int error_VALUE = 4;
+    public static final int error_VALUE = 5;
     /**
      * <pre>
      *更新信息
      * </pre>
      *
-     * <code>update = 5;</code>
+     * <code>update = 6;</code>
      */
-    public static final int update_VALUE = 5;
+    public static final int update_VALUE = 6;
     /**
      * <pre>
      *心跳
      * </pre>
      *
-     * <code>heat = 6;</code>
+     * <code>heat = 7;</code>
      */
-    public static final int heat_VALUE = 6;
+    public static final int heat_VALUE = 7;
     /**
-     * <code>req = 7;</code>
+     * <code>req = 8;</code>
      */
-    public static final int req_VALUE = 7;
+    public static final int req_VALUE = 8;
     /**
-     * <code>resp = 8;</code>
+     * <code>resp = 9;</code>
      */
-    public static final int resp_VALUE = 8;
+    public static final int resp_VALUE = 9;
 
 
     public final int getNumber() {
@@ -163,14 +179,15 @@ public final class MsgClient2Server {
     public static MsgType forNumber(int value) {
       switch (value) {
         case 0: return zero;
-        case 1: return open;
-        case 2: return lock;
-        case 3: return init;
-        case 4: return error;
-        case 5: return update;
-        case 6: return heat;
-        case 7: return req;
-        case 8: return resp;
+        case 1: return mid;
+        case 2: return init;
+        case 3: return open;
+        case 4: return lock;
+        case 5: return error;
+        case 6: return update;
+        case 7: return heat;
+        case 8: return req;
+        case 9: return resp;
         default: return null;
       }
     }
@@ -3643,11 +3660,11 @@ public final class MsgClient2Server {
       " \001(\t\022\025\n\005cabin\030\004 \003(\0132\006.Cabin\"_\n\003Msg\022\031\n\007ms" +
       "gType\030\001 \001(\0162\010.MsgType\022\021\n\tsessionID\030\002 \001(\t" +
       "\022\031\n\007machine\030\003 \001(\0132\010.Machine\022\017\n\007msgInfo\030\004" +
-      " \001(\t*e\n\007MsgType\022\010\n\004zero\020\000\022\010\n\004open\020\001\022\010\n\004l" +
-      "ock\020\002\022\010\n\004init\020\003\022\t\n\005error\020\004\022\n\n\006update\020\005\022\010" +
-      "\n\004heat\020\006\022\007\n\003req\020\007\022\010\n\004resp\020\010B0\n\034com.fly.n",
-      "etty.codec.protobufB\020MsgClient2Serverb\006p" +
-      "roto3"
+      " \001(\t*n\n\007MsgType\022\010\n\004zero\020\000\022\007\n\003mid\020\001\022\010\n\004in" +
+      "it\020\002\022\010\n\004open\020\003\022\010\n\004lock\020\004\022\t\n\005error\020\005\022\n\n\006u" +
+      "pdate\020\006\022\010\n\004heat\020\007\022\007\n\003req\020\010\022\010\n\004resp\020\tB0\n\034",
+      "com.fly.netty.codec.protobufB\020MsgClient2" +
+      "Serverb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

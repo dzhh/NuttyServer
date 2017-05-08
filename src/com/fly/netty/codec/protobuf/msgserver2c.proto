@@ -10,7 +10,7 @@ enum MsgType{
   heat = 3;//心跳
   qita = 4;//其他类型
   req = 5;
-  resp = 6;
+  resp = 6;//回复
 }
 
 message Msg {

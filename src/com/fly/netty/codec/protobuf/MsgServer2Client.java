@@ -60,6 +60,10 @@ public final class MsgServer2Client {
      */
     req(5),
     /**
+     * <pre>
+     *回复
+     * </pre>
+     *
      * <code>resp = 6;</code>
      */
     resp(6),
@@ -107,6 +111,10 @@ public final class MsgServer2Client {
      */
     public static final int req_VALUE = 5;
     /**
+     * <pre>
+     *回复
+     * </pre>
+     *
      * <code>resp = 6;</code>
      */
     public static final int resp_VALUE = 6;

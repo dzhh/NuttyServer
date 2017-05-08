@@ -21,14 +21,15 @@ message Machine {
 
 enum MsgType{
   zero = 0;
-  open = 1;//借充电宝
-  lock = 2;//还充电宝
-  init = 3;//初始化信息
-  error = 4;//主板自检故障
-  update = 5;//更新信息
-  heat = 6;//心跳
-  req = 7;
-  resp = 8;
+  mid = 1;//验证机器
+  init = 2;//初始化信息
+  open = 3;//借充电宝
+  lock = 4;//还充电宝
+  error = 5;//主板自检故障
+  update = 6;//更新信息
+  heat = 7;//心跳
+  req = 8;
+  resp = 9;
 }
 
 message Msg {
