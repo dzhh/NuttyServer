@@ -67,6 +67,10 @@ public final class MsgServer2Client {
      * <code>resp = 6;</code>
      */
     resp(6),
+    /**
+     * <code>change = 7;</code>
+     */
+    change(7),
     UNRECOGNIZED(-1),
     ;
 
@@ -118,6 +122,10 @@ public final class MsgServer2Client {
      * <code>resp = 6;</code>
      */
     public static final int resp_VALUE = 6;
+    /**
+     * <code>change = 7;</code>
+     */
+    public static final int change_VALUE = 7;
 
 
     public final int getNumber() {
@@ -145,6 +153,7 @@ public final class MsgServer2Client {
         case 4: return qita;
         case 5: return req;
         case 6: return resp;
+        case 7: return change;
         default: return null;
       }
     }
@@ -1226,11 +1235,11 @@ public final class MsgServer2Client {
     java.lang.String[] descriptorData = {
       "\n\021msgserver2c.proto\"R\n\003Msg\022\031\n\007msgType\030\001 " +
       "\001(\0162\010.MsgType\022\021\n\tsessionID\030\002 \001(\t\022\017\n\007msgI" +
-      "nfo\030\003 \001(\t\022\014\n\004c_id\030\004 \001(\t*N\n\007MsgType\022\010\n\004ze" +
+      "nfo\030\003 \001(\t\022\014\n\004c_id\030\004 \001(\t*Z\n\007MsgType\022\010\n\004ze" +
       "ro\020\000\022\010\n\004open\020\001\022\010\n\004lock\020\002\022\010\n\004heat\020\003\022\010\n\004qi" +
-      "ta\020\004\022\007\n\003req\020\005\022\010\n\004resp\020\006B0\n\034com.fly.netty" +
-      ".codec.protobufB\020MsgServer2Clientb\006proto" +
-      "3"
+      "ta\020\004\022\007\n\003req\020\005\022\010\n\004resp\020\006\022\n\n\006change\020\007B0\n\034c" +
+      "om.fly.netty.codec.protobufB\020MsgServer2C" +
+      "lientb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

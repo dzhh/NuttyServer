@@ -11,6 +11,7 @@ enum MsgType{
   qita = 4;//其他类型
   req = 5;
   resp = 6;//回复
+  change = 7;
 }
 
 message Msg {

@@ -30,6 +30,7 @@ enum MsgType{
   heat = 7;//心跳
   req = 8;
   resp = 9;
+  change = 10;
 }
 
 message Msg {
