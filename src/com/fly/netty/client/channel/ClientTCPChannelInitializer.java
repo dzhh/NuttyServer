@@ -28,8 +28,8 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 public class ClientTCPChannelInitializer <C extends Channel> extends ChannelInitializer<Channel> {
 
-    private String tlsMode = "CSA";
-
+//    private String tlsMode = "CSA";
+	private String tlsMode = "CA";
 	@Override
 	protected void initChannel(Channel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
@@ -49,9 +49,10 @@ public class ClientTCPChannelInitializer <C extends Channel> extends ChannelInit
 //	    pipeline.addLast(new HeartBeatReqHandler());
 //	    pipeline.addLast(new NettyClientHandler());
 		
+		String aaa = System.getProperty("user.dir")
+			    + "/src/com/fly/netty/ssl/cChat.jks";
 		SSLEngine engine = SecureChatSslContextFactory
 			    .getClientContext(
-					    tlsMode,
 					    System.getProperty("user.dir")
 						    + "/src/com/fly/netty/ssl/cChat.jks",
 					    System.getProperty("user.dir")

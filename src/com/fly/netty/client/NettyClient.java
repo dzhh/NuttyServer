@@ -36,7 +36,7 @@ public class NettyClient {
 	public static void main(String[]args) {
 	  	NettyClient nettyClient = new NettyClient();
 	  	nettyClient.connectServer(nettyClient, 10080, "127.0.0.1");
-	  	
+//	  	nettyClient.connectServer(nettyClient, 10080, "192.168.253.4");
     }
 	
 	

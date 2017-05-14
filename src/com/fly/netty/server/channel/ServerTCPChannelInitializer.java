@@ -46,7 +46,7 @@ public class ServerTCPChannelInitializer <C extends Channel> extends ChannelInit
 	 // 继承netty提供的通用半包处理器 LengthFieldBasedFrameDecoder
 	 // 继承ByteToMessageDecoder类，自己处理半包
 
-		SSLEngine engine = SecureChatSslContextFactory.getServerContext(tlsMode,
+		SSLEngine engine = SecureChatSslContextFactory.getServerContext(
 					    System.getProperty("user.dir") + "/src/com/fly/netty/ssl/sChat.jks",
 					    System.getProperty("user.dir") + "/src/com/fly/netty/ssl/sChat.jks")
 				       .createSSLEngine();
