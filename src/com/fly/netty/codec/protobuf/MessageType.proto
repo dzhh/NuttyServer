@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option java_package = "com.fly.netty.codec.protobuf";
+option java_outer_classname = "MessageType";
+
+enum MsgType{
+  zero = 0;
+  mid = 101;//客户端发送机器码
+  init = 102;//初始化信息
+  open = 103;//借充电宝
+  lock = 104;//还充电宝
+  error = 105;//主板自检故障
+  update = 106;//更新信息
+  heat = 107;//心跳
+  req = 108;
+  change = 109;
+  change_back_ok = 110;//
+  change_back_error = 111;
+  
+  mid_ok = 201;//服务器返回机器码认证成功
+  init_ok = 202;//初始化信息成功  
+  open_ok = 203;//借充电宝成功
+  lock_ok = 204;//还充电宝成功
+  error_ok = 205;//主板自检故障存储成功
+  update_ok = 206;//更新信息成功
+  heat_ok = 207;//心跳
+  req_ok = 208;
+  change_ok = 209;//更换消息发送成功
+
+  mid_error = 401;//服务器返回机器码认证失败 
+  init_error = 402; //初始化信息存储失败
+  open_error = 403;//借充电宝失败
+  lock_error = 404;//还充电宝失败
+  error_error = 405;//主板自检故障发送失败
+  update_error = 406;//更新信息成功
+  heat_error = 407;//心跳
+  req_error = 408;
+  change_error = 409;//更换失败
+}

@@ -1,2 +1,4 @@
+protoc  --java_out="D:\workspace\git\NuttyServer\src"  MessageType.proto
+
 protoc  --java_out="D:\workspace\git\NuttyServer\src"  msgclient2s.proto
 protoc  --java_out="D:\workspace\git\NuttyServer\src"  msgserver2c.proto 

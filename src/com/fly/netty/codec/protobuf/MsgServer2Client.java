@@ -14,198 +14,6 @@ public final class MsgServer2Client {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  /**
-   * Protobuf enum {@code MsgType}
-   */
-  public enum MsgType
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>zero = 0;</code>
-     */
-    zero(0),
-    /**
-     * <pre>
-     *借充电宝
-     * </pre>
-     *
-     * <code>open = 1;</code>
-     */
-    open(1),
-    /**
-     * <pre>
-     *还充电宝  
-     * </pre>
-     *
-     * <code>lock = 2;</code>
-     */
-    lock(2),
-    /**
-     * <pre>
-     *心跳
-     * </pre>
-     *
-     * <code>heat = 3;</code>
-     */
-    heat(3),
-    /**
-     * <pre>
-     *其他类型
-     * </pre>
-     *
-     * <code>qita = 4;</code>
-     */
-    qita(4),
-    /**
-     * <code>req = 5;</code>
-     */
-    req(5),
-    /**
-     * <pre>
-     *回复
-     * </pre>
-     *
-     * <code>resp = 6;</code>
-     */
-    resp(6),
-    /**
-     * <code>change = 7;</code>
-     */
-    change(7),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>zero = 0;</code>
-     */
-    public static final int zero_VALUE = 0;
-    /**
-     * <pre>
-     *借充电宝
-     * </pre>
-     *
-     * <code>open = 1;</code>
-     */
-    public static final int open_VALUE = 1;
-    /**
-     * <pre>
-     *还充电宝  
-     * </pre>
-     *
-     * <code>lock = 2;</code>
-     */
-    public static final int lock_VALUE = 2;
-    /**
-     * <pre>
-     *心跳
-     * </pre>
-     *
-     * <code>heat = 3;</code>
-     */
-    public static final int heat_VALUE = 3;
-    /**
-     * <pre>
-     *其他类型
-     * </pre>
-     *
-     * <code>qita = 4;</code>
-     */
-    public static final int qita_VALUE = 4;
-    /**
-     * <code>req = 5;</code>
-     */
-    public static final int req_VALUE = 5;
-    /**
-     * <pre>
-     *回复
-     * </pre>
-     *
-     * <code>resp = 6;</code>
-     */
-    public static final int resp_VALUE = 6;
-    /**
-     * <code>change = 7;</code>
-     */
-    public static final int change_VALUE = 7;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static MsgType valueOf(int value) {
-      return forNumber(value);
-    }
-
-    public static MsgType forNumber(int value) {
-      switch (value) {
-        case 0: return zero;
-        case 1: return open;
-        case 2: return lock;
-        case 3: return heat;
-        case 4: return qita;
-        case 5: return req;
-        case 6: return resp;
-        case 7: return change;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<MsgType>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        MsgType> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<MsgType>() {
-            public MsgType findValueByNumber(int number) {
-              return MsgType.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return com.fly.netty.codec.protobuf.MsgServer2Client.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final MsgType[] VALUES = values();
-
-    public static MsgType valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private MsgType(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:MsgType)
-  }
-
   public interface MsgOrBuilder extends
       // @@protoc_insertion_point(interface_extends:Msg)
       com.google.protobuf.MessageOrBuilder {
@@ -225,7 +33,7 @@ public final class MsgServer2Client {
      *
      * <code>.MsgType msgType = 1;</code>
      */
-    com.fly.netty.codec.protobuf.MsgServer2Client.MsgType getMsgType();
+    com.fly.netty.codec.protobuf.MessageType.MsgType getMsgType();
 
     /**
      * <pre>
@@ -268,18 +76,9 @@ public final class MsgServer2Client {
      *机舱编号
      * </pre>
      *
-     * <code>string c_id = 4;</code>
+     * <code>int32 c_id = 4;</code>
      */
-    java.lang.String getCId();
-    /**
-     * <pre>
-     *机舱编号
-     * </pre>
-     *
-     * <code>string c_id = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getCIdBytes();
+    int getCId();
   }
   /**
    * Protobuf type {@code Msg}
@@ -296,7 +95,7 @@ public final class MsgServer2Client {
       msgType_ = 0;
       sessionID_ = "";
       msgInfo_ = "";
-      cId_ = "";
+      cId_ = 0;
     }
 
     @java.lang.Override
@@ -342,10 +141,9 @@ public final class MsgServer2Client {
               msgInfo_ = s;
               break;
             }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 32: {
 
-              cId_ = s;
+              cId_ = input.readInt32();
               break;
             }
           }
@@ -390,9 +188,9 @@ public final class MsgServer2Client {
      *
      * <code>.MsgType msgType = 1;</code>
      */
-    public com.fly.netty.codec.protobuf.MsgServer2Client.MsgType getMsgType() {
-      com.fly.netty.codec.protobuf.MsgServer2Client.MsgType result = com.fly.netty.codec.protobuf.MsgServer2Client.MsgType.valueOf(msgType_);
-      return result == null ? com.fly.netty.codec.protobuf.MsgServer2Client.MsgType.UNRECOGNIZED : result;
+    public com.fly.netty.codec.protobuf.MessageType.MsgType getMsgType() {
+      com.fly.netty.codec.protobuf.MessageType.MsgType result = com.fly.netty.codec.protobuf.MessageType.MsgType.valueOf(msgType_);
+      return result == null ? com.fly.netty.codec.protobuf.MessageType.MsgType.UNRECOGNIZED : result;
     }
 
     public static final int SESSIONID_FIELD_NUMBER = 2;
@@ -480,45 +278,16 @@ public final class MsgServer2Client {
     }
 
     public static final int C_ID_FIELD_NUMBER = 4;
-    private volatile java.lang.Object cId_;
+    private int cId_;
     /**
      * <pre>
      *机舱编号
      * </pre>
      *
-     * <code>string c_id = 4;</code>
+     * <code>int32 c_id = 4;</code>
      */
-    public java.lang.String getCId() {
-      java.lang.Object ref = cId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        cId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *机舱编号
-     * </pre>
-     *
-     * <code>string c_id = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getCIdBytes() {
-      java.lang.Object ref = cId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        cId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public int getCId() {
+      return cId_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -533,7 +302,7 @@ public final class MsgServer2Client {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (msgType_ != com.fly.netty.codec.protobuf.MsgServer2Client.MsgType.zero.getNumber()) {
+      if (msgType_ != com.fly.netty.codec.protobuf.MessageType.MsgType.zero.getNumber()) {
         output.writeEnum(1, msgType_);
       }
       if (!getSessionIDBytes().isEmpty()) {
@@ -542,8 +311,8 @@ public final class MsgServer2Client {
       if (!getMsgInfoBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, msgInfo_);
       }
-      if (!getCIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, cId_);
+      if (cId_ != 0) {
+        output.writeInt32(4, cId_);
       }
     }
 
@@ -552,7 +321,7 @@ public final class MsgServer2Client {
       if (size != -1) return size;
 
       size = 0;
-      if (msgType_ != com.fly.netty.codec.protobuf.MsgServer2Client.MsgType.zero.getNumber()) {
+      if (msgType_ != com.fly.netty.codec.protobuf.MessageType.MsgType.zero.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, msgType_);
       }
@@ -562,8 +331,9 @@ public final class MsgServer2Client {
       if (!getMsgInfoBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, msgInfo_);
       }
-      if (!getCIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, cId_);
+      if (cId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, cId_);
       }
       memoizedSize = size;
       return size;
@@ -586,8 +356,8 @@ public final class MsgServer2Client {
           .equals(other.getSessionID());
       result = result && getMsgInfo()
           .equals(other.getMsgInfo());
-      result = result && getCId()
-          .equals(other.getCId());
+      result = result && (getCId()
+          == other.getCId());
       return result;
     }
 
@@ -605,7 +375,7 @@ public final class MsgServer2Client {
       hash = (37 * hash) + MSGINFO_FIELD_NUMBER;
       hash = (53 * hash) + getMsgInfo().hashCode();
       hash = (37 * hash) + C_ID_FIELD_NUMBER;
-      hash = (53 * hash) + getCId().hashCode();
+      hash = (53 * hash) + getCId();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -730,7 +500,7 @@ public final class MsgServer2Client {
 
         msgInfo_ = "";
 
-        cId_ = "";
+        cId_ = 0;
 
         return this;
       }
@@ -810,9 +580,8 @@ public final class MsgServer2Client {
           msgInfo_ = other.msgInfo_;
           onChanged();
         }
-        if (!other.getCId().isEmpty()) {
-          cId_ = other.cId_;
-          onChanged();
+        if (other.getCId() != 0) {
+          setCId(other.getCId());
         }
         onChanged();
         return this;
@@ -870,9 +639,9 @@ public final class MsgServer2Client {
        *
        * <code>.MsgType msgType = 1;</code>
        */
-      public com.fly.netty.codec.protobuf.MsgServer2Client.MsgType getMsgType() {
-        com.fly.netty.codec.protobuf.MsgServer2Client.MsgType result = com.fly.netty.codec.protobuf.MsgServer2Client.MsgType.valueOf(msgType_);
-        return result == null ? com.fly.netty.codec.protobuf.MsgServer2Client.MsgType.UNRECOGNIZED : result;
+      public com.fly.netty.codec.protobuf.MessageType.MsgType getMsgType() {
+        com.fly.netty.codec.protobuf.MessageType.MsgType result = com.fly.netty.codec.protobuf.MessageType.MsgType.valueOf(msgType_);
+        return result == null ? com.fly.netty.codec.protobuf.MessageType.MsgType.UNRECOGNIZED : result;
       }
       /**
        * <pre>
@@ -881,7 +650,7 @@ public final class MsgServer2Client {
        *
        * <code>.MsgType msgType = 1;</code>
        */
-      public Builder setMsgType(com.fly.netty.codec.protobuf.MsgServer2Client.MsgType value) {
+      public Builder setMsgType(com.fly.netty.codec.protobuf.MessageType.MsgType value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -1082,59 +851,26 @@ public final class MsgServer2Client {
         return this;
       }
 
-      private java.lang.Object cId_ = "";
+      private int cId_ ;
       /**
        * <pre>
        *机舱编号
        * </pre>
        *
-       * <code>string c_id = 4;</code>
+       * <code>int32 c_id = 4;</code>
        */
-      public java.lang.String getCId() {
-        java.lang.Object ref = cId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          cId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public int getCId() {
+        return cId_;
       }
       /**
        * <pre>
        *机舱编号
        * </pre>
        *
-       * <code>string c_id = 4;</code>
+       * <code>int32 c_id = 4;</code>
        */
-      public com.google.protobuf.ByteString
-          getCIdBytes() {
-        java.lang.Object ref = cId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          cId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *机舱编号
-       * </pre>
-       *
-       * <code>string c_id = 4;</code>
-       */
-      public Builder setCId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setCId(int value) {
+        
         cId_ = value;
         onChanged();
         return this;
@@ -1144,29 +880,11 @@ public final class MsgServer2Client {
        *机舱编号
        * </pre>
        *
-       * <code>string c_id = 4;</code>
+       * <code>int32 c_id = 4;</code>
        */
       public Builder clearCId() {
         
-        cId_ = getDefaultInstance().getCId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *机舱编号
-       * </pre>
-       *
-       * <code>string c_id = 4;</code>
-       */
-      public Builder setCIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        cId_ = value;
+        cId_ = 0;
         onChanged();
         return this;
       }
@@ -1233,13 +951,11 @@ public final class MsgServer2Client {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\021msgserver2c.proto\"R\n\003Msg\022\031\n\007msgType\030\001 " +
-      "\001(\0162\010.MsgType\022\021\n\tsessionID\030\002 \001(\t\022\017\n\007msgI" +
-      "nfo\030\003 \001(\t\022\014\n\004c_id\030\004 \001(\t*Z\n\007MsgType\022\010\n\004ze" +
-      "ro\020\000\022\010\n\004open\020\001\022\010\n\004lock\020\002\022\010\n\004heat\020\003\022\010\n\004qi" +
-      "ta\020\004\022\007\n\003req\020\005\022\010\n\004resp\020\006\022\n\n\006change\020\007B0\n\034c" +
-      "om.fly.netty.codec.protobufB\020MsgServer2C" +
-      "lientb\006proto3"
+      "\n\021msgserver2c.proto\032\021MessageType.proto\"R" +
+      "\n\003Msg\022\031\n\007msgType\030\001 \001(\0162\010.MsgType\022\021\n\tsess" +
+      "ionID\030\002 \001(\t\022\017\n\007msgInfo\030\003 \001(\t\022\014\n\004c_id\030\004 \001" +
+      "(\005B0\n\034com.fly.netty.codec.protobufB\020MsgS" +
+      "erver2Clientb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1252,6 +968,7 @@ public final class MsgServer2Client {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.fly.netty.codec.protobuf.MessageType.getDescriptor(),
         }, assigner);
     internal_static_Msg_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -1259,6 +976,7 @@ public final class MsgServer2Client {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Msg_descriptor,
         new java.lang.String[] { "MsgType", "SessionID", "MsgInfo", "CId", });
+    com.fly.netty.codec.protobuf.MessageType.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

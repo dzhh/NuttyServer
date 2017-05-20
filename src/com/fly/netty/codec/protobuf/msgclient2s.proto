@@ -2,11 +2,12 @@ syntax = "proto3";
 
 option java_package = "com.fly.netty.codec.protobuf";
 option java_outer_classname = "MsgClient2Server";
+import "MessageType.proto";
 
 message Cabin {
-  string c_id = 1;//充电舱编号
+  int32 c_id = 1;//充电舱编号
   string p_id = 2;//充电宝RFID
-  bool p_lock = 3;//充电宝锁状态
+  int32 p_lock = 3;//充电宝锁状态
   int32 p_count = 4;//充电宝循环次数
   int32 p_quantity = 5;//电量
 }
@@ -14,28 +15,19 @@ message Cabin {
 
 message Machine {
   string m_id = 1;//机器码
-  string wifi = 2;
-  string mobile = 3;//设备网络
+  int32 wifi = 2;
+  int32 mobile = 3;//设备网络
   repeated Cabin cabin = 4;//多个充电舱
 }
 
-enum MsgType{
-  zero = 0;
-  mid = 1;//验证机器
-  init = 2;//初始化信息
-  open = 3;//借充电宝
-  lock = 4;//还充电宝
-  error = 5;//主板自检故障
-  update = 6;//更新信息
-  heat = 7;//心跳
-  req = 8;
-  resp = 9;
-  change = 10;
-}
 
 message Msg {
   MsgType msgType = 1; //消息类型
   string sessionID = 2; //会话ID
   Machine machine = 3;//机器
   string msgInfo = 4;//消息描述
+  string p_id = 5;//充电宝编号
+  int32 c_id = 6;//机舱编号
+  
+  
 }
