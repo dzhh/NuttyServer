@@ -20,438 +20,444 @@ public final class MessageType {
   public enum MsgType
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
-     * <code>zero = 0;</code>
+     * <code>ZERO = 0;</code>
      */
-    zero(0),
+    ZERO(0),
     /**
      * <pre>
-     *客户端发送机器码
+     *客户端发送机器码认证
      * </pre>
      *
-     * <code>mid = 101;</code>
+     * <code>AUTH = 1001;</code>
      */
-    mid(101),
+    AUTH(1001),
     /**
      * <pre>
-     *初始化信息
+     *服务认证成功
      * </pre>
      *
-     * <code>init = 102;</code>
+     * <code>AUTH_BACK_OK = 2001;</code>
      */
-    init(102),
+    AUTH_BACK_OK(2001),
     /**
      * <pre>
-     *借充电宝
+     *认证失败
      * </pre>
      *
-     * <code>open = 103;</code>
+     * <code>AUTH_BACK_ERROR = 4001;</code>
      */
-    open(103),
+    AUTH_BACK_ERROR(4001),
     /**
      * <pre>
-     *还充电宝
+     *客户端初始化机器data
      * </pre>
      *
-     * <code>lock = 104;</code>
+     * <code>INIT = 1002;</code>
      */
-    lock(104),
+    INIT(1002),
     /**
      * <pre>
-     *主板自检故障
+     *服务器存储init数据成功
      * </pre>
      *
-     * <code>error = 105;</code>
+     * <code>INIT_BACK_OK = 2002;</code>
      */
-    error(105),
-    /**
-     * <pre>
-     *更新信息
-     * </pre>
-     *
-     * <code>update = 106;</code>
-     */
-    update(106),
-    /**
-     * <pre>
-     *心跳
-     * </pre>
-     *
-     * <code>heat = 107;</code>
-     */
-    heat(107),
-    /**
-     * <code>req = 108;</code>
-     */
-    req(108),
-    /**
-     * <code>change = 109;</code>
-     */
-    change(109),
+    INIT_BACK_OK(2002),
     /**
      * <pre>
      * </pre>
      *
-     * <code>change_back_ok = 110;</code>
+     * <code>INIT_BACK_ERROR = 4002;</code>
      */
-    change_back_ok(110),
-    /**
-     * <code>change_back_error = 111;</code>
-     */
-    change_back_error(111),
+    INIT_BACK_ERROR(4002),
     /**
      * <pre>
-     *服务器返回机器码认证成功
+     *客户端轮询更新data
      * </pre>
      *
-     * <code>mid_ok = 201;</code>
+     * <code>UPDATE = 1003;</code>
      */
-    mid_ok(201),
+    UPDATE(1003),
     /**
      * <pre>
-     *初始化信息成功  
+     *服务器更新成功
      * </pre>
      *
-     * <code>init_ok = 202;</code>
+     * <code>UPDATE_BACK_OK = 2003;</code>
      */
-    init_ok(202),
+    UPDATE_BACK_OK(2003),
     /**
      * <pre>
-     *借充电宝成功
+     *更新失败
      * </pre>
      *
-     * <code>open_ok = 203;</code>
+     * <code>UPDATE_BACK_ERROR = 4003;</code>
      */
-    open_ok(203),
+    UPDATE_BACK_ERROR(4003),
     /**
      * <pre>
-     *还充电宝成功
+     *服务器打开充电舱
      * </pre>
      *
-     * <code>lock_ok = 204;</code>
+     * <code>OPEN = 1005;</code>
      */
-    lock_ok(204),
+    OPEN(1005),
     /**
      * <pre>
-     *主板自检故障存储成功
+     *机器打开充电舱成功
      * </pre>
      *
-     * <code>error_ok = 205;</code>
+     * <code>OPEN_BACK_OK = 2005;</code>
      */
-    error_ok(205),
+    OPEN_BACK_OK(2005),
     /**
      * <pre>
-     *更新信息成功
      * </pre>
      *
-     * <code>update_ok = 206;</code>
+     * <code>OPEN_BACK_ERROR = 4005;</code>
      */
-    update_ok(206),
+    OPEN_BACK_ERROR(4005),
     /**
      * <pre>
-     *心跳
+     *客户端发送归还类型消息
      * </pre>
      *
-     * <code>heat_ok = 207;</code>
+     * <code>RETURN = 1006;</code>
      */
-    heat_ok(207),
-    /**
-     * <code>req_ok = 208;</code>
-     */
-    req_ok(208),
+    RETURN(1006),
     /**
      * <pre>
-     *更换消息发送成功
+     *服务器返回归还成功
      * </pre>
      *
-     * <code>change_ok = 209;</code>
+     * <code>RETURN_BACK_OK = 2006;</code>
      */
-    change_ok(209),
+    RETURN_BACK_OK(2006),
+    /**
+     * <code>RETURN_BACK_ERROR = 4006;</code>
+     */
+    RETURN_BACK_ERROR(4006),
     /**
      * <pre>
-     *服务器返回机器码认证失败 
+     *客户端发送更换消息
      * </pre>
      *
-     * <code>mid_error = 401;</code>
+     * <code>CHANGE = 1007;</code>
      */
-    mid_error(401),
+    CHANGE(1007),
     /**
      * <pre>
-     *初始化信息存储失败
+     *更换成功
      * </pre>
      *
-     * <code>init_error = 402;</code>
+     * <code>CHANGE_BACK_OK = 2007;</code>
      */
-    init_error(402),
-    /**
-     * <pre>
-     *借充电宝失败
-     * </pre>
-     *
-     * <code>open_error = 403;</code>
-     */
-    open_error(403),
-    /**
-     * <pre>
-     *还充电宝失败
-     * </pre>
-     *
-     * <code>lock_error = 404;</code>
-     */
-    lock_error(404),
-    /**
-     * <pre>
-     *主板自检故障发送失败
-     * </pre>
-     *
-     * <code>error_error = 405;</code>
-     */
-    error_error(405),
-    /**
-     * <pre>
-     *更新信息成功
-     * </pre>
-     *
-     * <code>update_error = 406;</code>
-     */
-    update_error(406),
-    /**
-     * <pre>
-     *心跳
-     * </pre>
-     *
-     * <code>heat_error = 407;</code>
-     */
-    heat_error(407),
-    /**
-     * <code>req_error = 408;</code>
-     */
-    req_error(408),
+    CHANGE_BACK_OK(2007),
     /**
      * <pre>
      *更换失败
      * </pre>
      *
-     * <code>change_error = 409;</code>
+     * <code>CHANGE_BACK_ERROR = 4007;</code>
      */
-    change_error(409),
+    CHANGE_BACK_ERROR(4007),
+    /**
+     * <pre>
+     *服务器发送更换状态
+     * </pre>
+     *
+     * <code>CHANGE_MODE = 1008;</code>
+     */
+    CHANGE_MODE(1008),
+    /**
+     * <pre>
+     *客户端进入更换状态
+     * </pre>
+     *
+     * <code>CHANGE_MODE_OK = 2008;</code>
+     */
+    CHANGE_MODE_OK(2008),
+    /**
+     * <pre>
+     *更换状态失败
+     * </pre>
+     *
+     * <code>CHANGE_MODE_ERROR = 4008;</code>
+     */
+    CHANGE_MODE_ERROR(4008),
+    /**
+     * <pre>
+     *服务器发送锁住充电舱
+     * </pre>
+     *
+     * <code>LOCK = 1009;</code>
+     */
+    LOCK(1009),
+    /**
+     * <pre>
+     *指定充电舱锁住成功
+     * </pre>
+     *
+     * <code>LOCK_BACK_OK = 2009;</code>
+     */
+    LOCK_BACK_OK(2009),
+    /**
+     * <code>LOCK_BACK_ERROR = 4009;</code>
+     */
+    LOCK_BACK_ERROR(4009),
+    /**
+     * <pre>
+     *机器发送充电舱或者充电宝损坏信息
+     * </pre>
+     *
+     * <code>ERROR = 1010;</code>
+     */
+    ERROR(1010),
+    /**
+     * <pre>
+     *服务器记录故障成功
+     * </pre>
+     *
+     * <code>ERROR_BACK_OK = 2010;</code>
+     */
+    ERROR_BACK_OK(2010),
+    /**
+     * <code>ERROR_BACK_ERROR = 4010;</code>
+     */
+    ERROR_BACK_ERROR(4010),
+    /**
+     * <code>HEAT = 1011;</code>
+     */
+    HEAT(1011),
+    /**
+     * <code>REQ = 1012;</code>
+     */
+    REQ(1012),
+    /**
+     * <code>RESP = 1013;</code>
+     */
+    RESP(1013),
     UNRECOGNIZED(-1),
     ;
 
     /**
-     * <code>zero = 0;</code>
+     * <code>ZERO = 0;</code>
      */
-    public static final int zero_VALUE = 0;
+    public static final int ZERO_VALUE = 0;
     /**
      * <pre>
-     *客户端发送机器码
+     *客户端发送机器码认证
      * </pre>
      *
-     * <code>mid = 101;</code>
+     * <code>AUTH = 1001;</code>
      */
-    public static final int mid_VALUE = 101;
+    public static final int AUTH_VALUE = 1001;
     /**
      * <pre>
-     *初始化信息
+     *服务认证成功
      * </pre>
      *
-     * <code>init = 102;</code>
+     * <code>AUTH_BACK_OK = 2001;</code>
      */
-    public static final int init_VALUE = 102;
+    public static final int AUTH_BACK_OK_VALUE = 2001;
     /**
      * <pre>
-     *借充电宝
+     *认证失败
      * </pre>
      *
-     * <code>open = 103;</code>
+     * <code>AUTH_BACK_ERROR = 4001;</code>
      */
-    public static final int open_VALUE = 103;
+    public static final int AUTH_BACK_ERROR_VALUE = 4001;
     /**
      * <pre>
-     *还充电宝
+     *客户端初始化机器data
      * </pre>
      *
-     * <code>lock = 104;</code>
+     * <code>INIT = 1002;</code>
      */
-    public static final int lock_VALUE = 104;
+    public static final int INIT_VALUE = 1002;
     /**
      * <pre>
-     *主板自检故障
+     *服务器存储init数据成功
      * </pre>
      *
-     * <code>error = 105;</code>
+     * <code>INIT_BACK_OK = 2002;</code>
      */
-    public static final int error_VALUE = 105;
-    /**
-     * <pre>
-     *更新信息
-     * </pre>
-     *
-     * <code>update = 106;</code>
-     */
-    public static final int update_VALUE = 106;
-    /**
-     * <pre>
-     *心跳
-     * </pre>
-     *
-     * <code>heat = 107;</code>
-     */
-    public static final int heat_VALUE = 107;
-    /**
-     * <code>req = 108;</code>
-     */
-    public static final int req_VALUE = 108;
-    /**
-     * <code>change = 109;</code>
-     */
-    public static final int change_VALUE = 109;
+    public static final int INIT_BACK_OK_VALUE = 2002;
     /**
      * <pre>
      * </pre>
      *
-     * <code>change_back_ok = 110;</code>
+     * <code>INIT_BACK_ERROR = 4002;</code>
      */
-    public static final int change_back_ok_VALUE = 110;
-    /**
-     * <code>change_back_error = 111;</code>
-     */
-    public static final int change_back_error_VALUE = 111;
+    public static final int INIT_BACK_ERROR_VALUE = 4002;
     /**
      * <pre>
-     *服务器返回机器码认证成功
+     *客户端轮询更新data
      * </pre>
      *
-     * <code>mid_ok = 201;</code>
+     * <code>UPDATE = 1003;</code>
      */
-    public static final int mid_ok_VALUE = 201;
+    public static final int UPDATE_VALUE = 1003;
     /**
      * <pre>
-     *初始化信息成功  
+     *服务器更新成功
      * </pre>
      *
-     * <code>init_ok = 202;</code>
+     * <code>UPDATE_BACK_OK = 2003;</code>
      */
-    public static final int init_ok_VALUE = 202;
+    public static final int UPDATE_BACK_OK_VALUE = 2003;
     /**
      * <pre>
-     *借充电宝成功
+     *更新失败
      * </pre>
      *
-     * <code>open_ok = 203;</code>
+     * <code>UPDATE_BACK_ERROR = 4003;</code>
      */
-    public static final int open_ok_VALUE = 203;
+    public static final int UPDATE_BACK_ERROR_VALUE = 4003;
     /**
      * <pre>
-     *还充电宝成功
+     *服务器打开充电舱
      * </pre>
      *
-     * <code>lock_ok = 204;</code>
+     * <code>OPEN = 1005;</code>
      */
-    public static final int lock_ok_VALUE = 204;
+    public static final int OPEN_VALUE = 1005;
     /**
      * <pre>
-     *主板自检故障存储成功
+     *机器打开充电舱成功
      * </pre>
      *
-     * <code>error_ok = 205;</code>
+     * <code>OPEN_BACK_OK = 2005;</code>
      */
-    public static final int error_ok_VALUE = 205;
+    public static final int OPEN_BACK_OK_VALUE = 2005;
     /**
      * <pre>
-     *更新信息成功
      * </pre>
      *
-     * <code>update_ok = 206;</code>
+     * <code>OPEN_BACK_ERROR = 4005;</code>
      */
-    public static final int update_ok_VALUE = 206;
+    public static final int OPEN_BACK_ERROR_VALUE = 4005;
     /**
      * <pre>
-     *心跳
+     *客户端发送归还类型消息
      * </pre>
      *
-     * <code>heat_ok = 207;</code>
+     * <code>RETURN = 1006;</code>
      */
-    public static final int heat_ok_VALUE = 207;
-    /**
-     * <code>req_ok = 208;</code>
-     */
-    public static final int req_ok_VALUE = 208;
+    public static final int RETURN_VALUE = 1006;
     /**
      * <pre>
-     *更换消息发送成功
+     *服务器返回归还成功
      * </pre>
      *
-     * <code>change_ok = 209;</code>
+     * <code>RETURN_BACK_OK = 2006;</code>
      */
-    public static final int change_ok_VALUE = 209;
+    public static final int RETURN_BACK_OK_VALUE = 2006;
+    /**
+     * <code>RETURN_BACK_ERROR = 4006;</code>
+     */
+    public static final int RETURN_BACK_ERROR_VALUE = 4006;
     /**
      * <pre>
-     *服务器返回机器码认证失败 
+     *客户端发送更换消息
      * </pre>
      *
-     * <code>mid_error = 401;</code>
+     * <code>CHANGE = 1007;</code>
      */
-    public static final int mid_error_VALUE = 401;
+    public static final int CHANGE_VALUE = 1007;
     /**
      * <pre>
-     *初始化信息存储失败
+     *更换成功
      * </pre>
      *
-     * <code>init_error = 402;</code>
+     * <code>CHANGE_BACK_OK = 2007;</code>
      */
-    public static final int init_error_VALUE = 402;
-    /**
-     * <pre>
-     *借充电宝失败
-     * </pre>
-     *
-     * <code>open_error = 403;</code>
-     */
-    public static final int open_error_VALUE = 403;
-    /**
-     * <pre>
-     *还充电宝失败
-     * </pre>
-     *
-     * <code>lock_error = 404;</code>
-     */
-    public static final int lock_error_VALUE = 404;
-    /**
-     * <pre>
-     *主板自检故障发送失败
-     * </pre>
-     *
-     * <code>error_error = 405;</code>
-     */
-    public static final int error_error_VALUE = 405;
-    /**
-     * <pre>
-     *更新信息成功
-     * </pre>
-     *
-     * <code>update_error = 406;</code>
-     */
-    public static final int update_error_VALUE = 406;
-    /**
-     * <pre>
-     *心跳
-     * </pre>
-     *
-     * <code>heat_error = 407;</code>
-     */
-    public static final int heat_error_VALUE = 407;
-    /**
-     * <code>req_error = 408;</code>
-     */
-    public static final int req_error_VALUE = 408;
+    public static final int CHANGE_BACK_OK_VALUE = 2007;
     /**
      * <pre>
      *更换失败
      * </pre>
      *
-     * <code>change_error = 409;</code>
+     * <code>CHANGE_BACK_ERROR = 4007;</code>
      */
-    public static final int change_error_VALUE = 409;
+    public static final int CHANGE_BACK_ERROR_VALUE = 4007;
+    /**
+     * <pre>
+     *服务器发送更换状态
+     * </pre>
+     *
+     * <code>CHANGE_MODE = 1008;</code>
+     */
+    public static final int CHANGE_MODE_VALUE = 1008;
+    /**
+     * <pre>
+     *客户端进入更换状态
+     * </pre>
+     *
+     * <code>CHANGE_MODE_OK = 2008;</code>
+     */
+    public static final int CHANGE_MODE_OK_VALUE = 2008;
+    /**
+     * <pre>
+     *更换状态失败
+     * </pre>
+     *
+     * <code>CHANGE_MODE_ERROR = 4008;</code>
+     */
+    public static final int CHANGE_MODE_ERROR_VALUE = 4008;
+    /**
+     * <pre>
+     *服务器发送锁住充电舱
+     * </pre>
+     *
+     * <code>LOCK = 1009;</code>
+     */
+    public static final int LOCK_VALUE = 1009;
+    /**
+     * <pre>
+     *指定充电舱锁住成功
+     * </pre>
+     *
+     * <code>LOCK_BACK_OK = 2009;</code>
+     */
+    public static final int LOCK_BACK_OK_VALUE = 2009;
+    /**
+     * <code>LOCK_BACK_ERROR = 4009;</code>
+     */
+    public static final int LOCK_BACK_ERROR_VALUE = 4009;
+    /**
+     * <pre>
+     *机器发送充电舱或者充电宝损坏信息
+     * </pre>
+     *
+     * <code>ERROR = 1010;</code>
+     */
+    public static final int ERROR_VALUE = 1010;
+    /**
+     * <pre>
+     *服务器记录故障成功
+     * </pre>
+     *
+     * <code>ERROR_BACK_OK = 2010;</code>
+     */
+    public static final int ERROR_BACK_OK_VALUE = 2010;
+    /**
+     * <code>ERROR_BACK_ERROR = 4010;</code>
+     */
+    public static final int ERROR_BACK_ERROR_VALUE = 4010;
+    /**
+     * <code>HEAT = 1011;</code>
+     */
+    public static final int HEAT_VALUE = 1011;
+    /**
+     * <code>REQ = 1012;</code>
+     */
+    public static final int REQ_VALUE = 1012;
+    /**
+     * <code>RESP = 1013;</code>
+     */
+    public static final int RESP_VALUE = 1013;
 
 
     public final int getNumber() {
@@ -472,36 +478,37 @@ public final class MessageType {
 
     public static MsgType forNumber(int value) {
       switch (value) {
-        case 0: return zero;
-        case 101: return mid;
-        case 102: return init;
-        case 103: return open;
-        case 104: return lock;
-        case 105: return error;
-        case 106: return update;
-        case 107: return heat;
-        case 108: return req;
-        case 109: return change;
-        case 110: return change_back_ok;
-        case 111: return change_back_error;
-        case 201: return mid_ok;
-        case 202: return init_ok;
-        case 203: return open_ok;
-        case 204: return lock_ok;
-        case 205: return error_ok;
-        case 206: return update_ok;
-        case 207: return heat_ok;
-        case 208: return req_ok;
-        case 209: return change_ok;
-        case 401: return mid_error;
-        case 402: return init_error;
-        case 403: return open_error;
-        case 404: return lock_error;
-        case 405: return error_error;
-        case 406: return update_error;
-        case 407: return heat_error;
-        case 408: return req_error;
-        case 409: return change_error;
+        case 0: return ZERO;
+        case 1001: return AUTH;
+        case 2001: return AUTH_BACK_OK;
+        case 4001: return AUTH_BACK_ERROR;
+        case 1002: return INIT;
+        case 2002: return INIT_BACK_OK;
+        case 4002: return INIT_BACK_ERROR;
+        case 1003: return UPDATE;
+        case 2003: return UPDATE_BACK_OK;
+        case 4003: return UPDATE_BACK_ERROR;
+        case 1005: return OPEN;
+        case 2005: return OPEN_BACK_OK;
+        case 4005: return OPEN_BACK_ERROR;
+        case 1006: return RETURN;
+        case 2006: return RETURN_BACK_OK;
+        case 4006: return RETURN_BACK_ERROR;
+        case 1007: return CHANGE;
+        case 2007: return CHANGE_BACK_OK;
+        case 4007: return CHANGE_BACK_ERROR;
+        case 1008: return CHANGE_MODE;
+        case 2008: return CHANGE_MODE_OK;
+        case 4008: return CHANGE_MODE_ERROR;
+        case 1009: return LOCK;
+        case 2009: return LOCK_BACK_OK;
+        case 4009: return LOCK_BACK_ERROR;
+        case 1010: return ERROR;
+        case 2010: return ERROR_BACK_OK;
+        case 4010: return ERROR_BACK_ERROR;
+        case 1011: return HEAT;
+        case 1012: return REQ;
+        case 1013: return RESP;
         default: return null;
       }
     }
@@ -563,19 +570,22 @@ public final class MessageType {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\021MessageType.proto*\270\003\n\007MsgType\022\010\n\004zero\020" +
-      "\000\022\007\n\003mid\020e\022\010\n\004init\020f\022\010\n\004open\020g\022\010\n\004lock\020h" +
-      "\022\t\n\005error\020i\022\n\n\006update\020j\022\010\n\004heat\020k\022\007\n\003req" +
-      "\020l\022\n\n\006change\020m\022\022\n\016change_back_ok\020n\022\025\n\021ch" +
-      "ange_back_error\020o\022\013\n\006mid_ok\020\311\001\022\014\n\007init_o" +
-      "k\020\312\001\022\014\n\007open_ok\020\313\001\022\014\n\007lock_ok\020\314\001\022\r\n\010erro" +
-      "r_ok\020\315\001\022\016\n\tupdate_ok\020\316\001\022\014\n\007heat_ok\020\317\001\022\013\n" +
-      "\006req_ok\020\320\001\022\016\n\tchange_ok\020\321\001\022\016\n\tmid_error\020" +
-      "\221\003\022\017\n\ninit_error\020\222\003\022\017\n\nopen_error\020\223\003\022\017\n\n" +
-      "lock_error\020\224\003\022\020\n\013error_error\020\225\003\022\021\n\014updat",
-      "e_error\020\226\003\022\017\n\nheat_error\020\227\003\022\016\n\treq_error" +
-      "\020\230\003\022\021\n\014change_error\020\231\003B+\n\034com.fly.netty." +
-      "codec.protobufB\013MessageTypeb\006proto3"
+      "\n\021MessageType.proto*\247\004\n\007MsgType\022\010\n\004ZERO\020" +
+      "\000\022\t\n\004AUTH\020\351\007\022\021\n\014AUTH_BACK_OK\020\321\017\022\024\n\017AUTH_" +
+      "BACK_ERROR\020\241\037\022\t\n\004INIT\020\352\007\022\021\n\014INIT_BACK_OK" +
+      "\020\322\017\022\024\n\017INIT_BACK_ERROR\020\242\037\022\013\n\006UPDATE\020\353\007\022\023" +
+      "\n\016UPDATE_BACK_OK\020\323\017\022\026\n\021UPDATE_BACK_ERROR" +
+      "\020\243\037\022\t\n\004OPEN\020\355\007\022\021\n\014OPEN_BACK_OK\020\325\017\022\024\n\017OPE" +
+      "N_BACK_ERROR\020\245\037\022\013\n\006RETURN\020\356\007\022\023\n\016RETURN_B" +
+      "ACK_OK\020\326\017\022\026\n\021RETURN_BACK_ERROR\020\246\037\022\013\n\006CHA" +
+      "NGE\020\357\007\022\023\n\016CHANGE_BACK_OK\020\327\017\022\026\n\021CHANGE_BA" +
+      "CK_ERROR\020\247\037\022\020\n\013CHANGE_MODE\020\360\007\022\023\n\016CHANGE_",
+      "MODE_OK\020\330\017\022\026\n\021CHANGE_MODE_ERROR\020\250\037\022\t\n\004LO" +
+      "CK\020\361\007\022\021\n\014LOCK_BACK_OK\020\331\017\022\024\n\017LOCK_BACK_ER" +
+      "ROR\020\251\037\022\n\n\005ERROR\020\362\007\022\022\n\rERROR_BACK_OK\020\332\017\022\025" +
+      "\n\020ERROR_BACK_ERROR\020\252\037\022\t\n\004HEAT\020\363\007\022\010\n\003REQ\020" +
+      "\364\007\022\t\n\004RESP\020\365\007B+\n\034com.fly.netty.codec.pro" +
+      "tobufB\013MessageTypeb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

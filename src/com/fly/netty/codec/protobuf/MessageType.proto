@@ -4,36 +4,46 @@ option java_package = "com.fly.netty.codec.protobuf";
 option java_outer_classname = "MessageType";
 
 enum MsgType{
-  zero = 0;
-  mid = 101;//客户端发送机器码
-  init = 102;//初始化信息
-  open = 103;//借充电宝
-  lock = 104;//还充电宝
-  error = 105;//主板自检故障
-  update = 106;//更新信息
-  heat = 107;//心跳
-  req = 108;
-  change = 109;
-  change_back_ok = 110;//
-  change_back_error = 111;
-  
-  mid_ok = 201;//服务器返回机器码认证成功
-  init_ok = 202;//初始化信息成功  
-  open_ok = 203;//借充电宝成功
-  lock_ok = 204;//还充电宝成功
-  error_ok = 205;//主板自检故障存储成功
-  update_ok = 206;//更新信息成功
-  heat_ok = 207;//心跳
-  req_ok = 208;
-  change_ok = 209;//更换消息发送成功
 
-  mid_error = 401;//服务器返回机器码认证失败 
-  init_error = 402; //初始化信息存储失败
-  open_error = 403;//借充电宝失败
-  lock_error = 404;//还充电宝失败
-  error_error = 405;//主板自检故障发送失败
-  update_error = 406;//更新信息成功
-  heat_error = 407;//心跳
-  req_error = 408;
-  change_error = 409;//更换失败
+	ZERO = 0;
+
+	AUTH = 1001;//客户端发送机器码认证
+	AUTH_BACK_OK = 2001;//服务认证成功
+	AUTH_BACK_ERROR = 4001;//认证失败
+	
+	INIT = 1002;//客户端初始化机器data
+	INIT_BACK_OK = 2002;//服务器存储init数据成功
+	INIT_BACK_ERROR = 4002;//
+	
+	UPDATE = 1003;//客户端轮询更新data
+	UPDATE_BACK_OK = 2003;//服务器更新成功
+	UPDATE_BACK_ERROR = 4003;//更新失败
+	
+	OPEN = 1005;//服务器打开充电舱
+	OPEN_BACK_OK = 2005;//机器打开充电舱成功
+	OPEN_BACK_ERROR = 4005;//
+	
+	RETURN = 1006;//客户端发送归还类型消息
+	RETURN_BACK_OK = 2006;//服务器返回归还成功
+	RETURN_BACK_ERROR = 4006;
+	
+	CHANGE = 1007;//客户端发送更换消息
+	CHANGE_BACK_OK = 2007;//更换成功
+	CHANGE_BACK_ERROR = 4007;//更换失败
+	
+	CHANGE_MODE = 1008;//服务器发送更换状态
+	CHANGE_MODE_OK = 2008;//客户端进入更换状态
+	CHANGE_MODE_ERROR = 4008;//更换状态失败
+	
+	LOCK = 1009;//服务器发送锁住充电舱
+	LOCK_BACK_OK = 2009;//指定充电舱锁住成功
+	LOCK_BACK_ERROR = 4009;
+	
+	ERROR = 1010;//机器发送充电舱或者充电宝损坏信息
+	ERROR_BACK_OK = 2010;//服务器记录故障成功
+	ERROR_BACK_ERROR = 4010;
+	
+	HEAT = 1011;
+	REQ = 1012;
+	RESP = 1013;
 }

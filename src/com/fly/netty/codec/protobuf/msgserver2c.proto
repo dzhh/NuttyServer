@@ -9,6 +9,5 @@ message Msg {
   MsgType msgType = 1; //消息类型
   string sessionID = 2; //会话ID
   string msgInfo = 3;//消息描述
-  int32 c_id = 4;//机舱编号
-  
+  int32 c_id = 4;//机舱编号 
 }

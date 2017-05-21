@@ -73,7 +73,7 @@ public final class MsgServer2Client {
 
     /**
      * <pre>
-     *机舱编号
+     *机舱编号 
      * </pre>
      *
      * <code>int32 c_id = 4;</code>
@@ -281,7 +281,7 @@ public final class MsgServer2Client {
     private int cId_;
     /**
      * <pre>
-     *机舱编号
+     *机舱编号 
      * </pre>
      *
      * <code>int32 c_id = 4;</code>
@@ -302,7 +302,7 @@ public final class MsgServer2Client {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (msgType_ != com.fly.netty.codec.protobuf.MessageType.MsgType.zero.getNumber()) {
+      if (msgType_ != com.fly.netty.codec.protobuf.MessageType.MsgType.ZERO.getNumber()) {
         output.writeEnum(1, msgType_);
       }
       if (!getSessionIDBytes().isEmpty()) {
@@ -321,7 +321,7 @@ public final class MsgServer2Client {
       if (size != -1) return size;
 
       size = 0;
-      if (msgType_ != com.fly.netty.codec.protobuf.MessageType.MsgType.zero.getNumber()) {
+      if (msgType_ != com.fly.netty.codec.protobuf.MessageType.MsgType.ZERO.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, msgType_);
       }
@@ -854,7 +854,7 @@ public final class MsgServer2Client {
       private int cId_ ;
       /**
        * <pre>
-       *机舱编号
+       *机舱编号 
        * </pre>
        *
        * <code>int32 c_id = 4;</code>
@@ -864,7 +864,7 @@ public final class MsgServer2Client {
       }
       /**
        * <pre>
-       *机舱编号
+       *机舱编号 
        * </pre>
        *
        * <code>int32 c_id = 4;</code>
@@ -877,7 +877,7 @@ public final class MsgServer2Client {
       }
       /**
        * <pre>
-       *机舱编号
+       *机舱编号 
        * </pre>
        *
        * <code>int32 c_id = 4;</code>
